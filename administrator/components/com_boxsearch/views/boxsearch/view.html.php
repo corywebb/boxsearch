@@ -11,7 +11,7 @@ class BoxsearchViewBoxsearch extends JViewLegacy
 {
 	protected $api_key         = '';
 	protected $client_id       = '';
-	protected $auth_secret     = '';
+	protected $client_secret     = '';
 	
      public function display($tpl = null)
      {    
@@ -20,7 +20,7 @@ class BoxsearchViewBoxsearch extends JViewLegacy
      	$this->sidebar = JHtmlSidebar::render();
      	$this->getKeys();
      	
-     	parent::display();
+     	parent::display($tpl);
      }
      
      protected function addToolbar()
@@ -45,9 +45,9 @@ class BoxsearchViewBoxsearch extends JViewLegacy
           	$this->client_id = $params->get('client_id');
           }
           
-          if ($params->get('auth_secret'))
+          if ($params->get('client_secret'))
           {
-          	$this->auth_secret = $params->get('auth_secret');
+          	$this->client_secret = $params->get('client_secret');
           }
      }
 }   

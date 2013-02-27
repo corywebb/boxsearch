@@ -9,8 +9,8 @@
                 <field
                         name="api_key"
                         type="text"
-                        label="COM_BOXSEARCH_CONFIG_API_CLIENT_SECRET_LABEL"
-                        description="COM_BOXSEARCH_CONFIG_API_CLIENT_SECRET_DESC"
+                        label="COM_BOXSEARCH_CONFIG_API_KEY_LABEL"
+                        description="COM_BOXSEARCH_CONFIG_API_KEY_DESC"
                         default=""
                 />
                 <field
@@ -21,13 +21,19 @@
                         default=""
                 />
                 <field
-                        name="auth_secret"
+                        name="client_secret"
                         type="text"
-                        label="COM_BOXSEARCH_CONFIG_API_AUTH_SECRET_LABEL"
-                        description="COM_BOXSEARCH_CONFIG_API_AUTH_SECRET_DESC"
+                        label="COM_BOXSEARCH_CONFIG_API_CLIENT_SECRET_LABEL"
+                        description="COM_BOXSEARCH_CONFIG_API_CLIENT_SECRET_DESC"
                         default=""
                 />
-              
+                <field
+                         name="refresh_token_expire"
+                         type="text"
+                         label="COM_BOXSEARCH_CONFIG_API_REFRESH_TOKEN_EXPIRE_LABEL"
+                         description="COM_BOXSEARCH_CONFIG_API_REFRESH_TOKEN_EXPIRE_DESC"
+                         default="14"
+                />
  
         </fieldset>
 </config>

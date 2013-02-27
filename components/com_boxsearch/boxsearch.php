@@ -12,7 +12,9 @@ defined('_JEXEC') or die;
 JLoader::register('Box_Rest_Client_Auth', __DIR__ . '/helpers/boxsearch_api.php');
 JLoader::register('Rest_Client', __DIR__ . '/helpers/boxsearch_api.php');
 JLoader::register('Box_Rest_Client', __DIR__ . '/helpers/boxsearch_api.php');
+JLoader::register('BoxsearchHelper', __DIR__ . '/helpers/boxsearch.php');
 
-$controller    = JControllerLegacy::getInstance('Boxsearch');
+
+$controller = JControllerLegacy::getInstance('Boxsearch');	
 $controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();

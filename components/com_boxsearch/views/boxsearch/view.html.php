@@ -9,30 +9,16 @@
 
 class BoxsearchViewBoxsearch extends JViewLegacy
 {    
-	protected $api_key         = '';
-     protected $client_id       = '';
-     protected $auth_secret     = '';
-	
+	protected     $api_key       = '';
+     protected     $client_id     = '';
+     protected     $auth_secret   = '';
+	protected     $results       = '';
+     
      public function display($tpl = null)
      {    
+     	$this->results = $this->get('search');
      	$this->getKeys();
-     	$this->authenticateBox();
           parent::display();
-     }
-     
-     public function authenticateBox()
-     {    
-     	$auth_app     =    new Rest_Client;
-     	
-     	$url = 'https://api.box.com/oauth2/authorize';
-          // auth params
-          $params = array('response_type'=>'code',
-                           'client_id'=>$this->client_id,
-                           'state'=>'authenticated');
-                    
-                    // authenticate the app
-          $auth = $auth_app->post($url,  $params);
-          echo $auth;
      }
      
      protected function getKeys()
@@ -57,4 +43,5 @@ class BoxsearchViewBoxsearch extends JViewLegacy
                $this->auth_secret = $params->get('auth_secret');
           }
      }
+     
 }

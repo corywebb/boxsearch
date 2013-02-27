@@ -45,8 +45,8 @@ defined('_JEXEC') or die;
                <tr>
                     <td><?php echo JText::_('COM_BOXSEARCH_AUTH_SECRET_LABEL'); ?></td>
                     <td>
-                         <?php if($this->auth_secret != ''): ?>
-                              <span class="label label-success"><?php echo $this->auth_secret; ?></span>
+                         <?php if($this->client_secret != ''): ?>
+                              <span class="label label-success"><?php echo $this->client_secret; ?></span>
                           <?php else: ?>
                               <span class="label label-warning"><?php echo JText::_('COM_BOXSEARCH_ERROR_KEY_NOT_SET')?></span>
                           <?php endif; ?>

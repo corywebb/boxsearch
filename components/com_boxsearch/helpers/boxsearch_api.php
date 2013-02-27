@@ -123,7 +123,6 @@ class Rest_Client {
           curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
           curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
           $data = curl_exec($ch);
-          
           curl_close($ch);
           
           return $data;
