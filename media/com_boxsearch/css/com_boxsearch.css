@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+ul.boxsearch, ul.boxsearch li {
+     margin: 0;
+     list-style: none;
+     list-style-type: none;
+     display: inline;
+     color: #888a8d;
+}
+ul.boxsearch:last-child {
+     border-right: none;
+} 
+
+ul.boxsearch li + li:before{
+    content: " | ";
+    padding: 0px;
+}
+
+.boxsearch-item h4 {
+     margin: 0px;
+}

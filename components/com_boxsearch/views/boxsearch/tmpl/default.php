@@ -23,14 +23,14 @@
 <?php if (isset($this->results->entries)): ?>
 <h5><?php echo JText::_('COM_BOXSEARCH_RESULTS_LABEL'); ?></h5>
 <?php foreach ($this->results->entries as $entry):?>
-    <div class="item">
+    <div class="boxsearch-item">
           <?php if(isset($entry->shared_link->download_url)): ?>
-          <div class="span2">
+          <div class="span1">
                <?php $icon =  BoxsearchHelper::getFileIcon($entry->shared_link->download_url); ?>
                <img src="<?php echo $icon; ?>" /> 
           </div>
           <?php endif; ?>
-          <div class="span8">
+          <div class="span11">
 	          <h4>
 	               <?php if(isset($entry->shared_link->download_url)):?>
 	                    <a href="<?php echo $entry->shared_link->download_url; ?>"><?php echo $entry->name; ?></a>
@@ -38,25 +38,34 @@
 	                    <?php echo $entry->name; ?>
 	               <?php endif; ?>
 	          </h4>
-	          <?php if ($entry->description): ?>
-	               <small>
-	                    <?php echo $entry->description; ?>
-	               </small>
-	          <?php endif; ?>
-	          <p><?php echo JText::sprintf('COM_BOXSEARCH_CREATED_AT_LABEL', JHtml::_('date', $entry->created_at, JText::_('DATE_FORMAT_LC3'))); ?></p>
-	          <p><?php echo JText::_('COM_BOXSEARCH_CREATED_BY_LABEL'); ?><?php echo ": ". $entry->created_by->name; ?></p>
-	          <p>
-	               <?php if(isset($entry->shared_link->download_url)): ?>
-	                    <a href="<?php echo $entry->shared_link->download_url;?>" class="btn btn-info" >
-	                         <?php echo JText::_('COM_BOXSEARCH_DOWNLOAD_LINK');?>
-	                    </a>
-	               <?php endif; ?>
-	               <?php if(isset($entry->shared_link->url)): ?>
-	                    <a href="<?php echo $entry->shared_link->url;?>" class="btn btn-success">
-	                         <?php echo JText::_('COM_BOXSEARCH_VIEW_LINK');?>
-	                    </a>
-	               <?php endif; ?>
-	          </p>
+	          <ul class="boxsearch">
+                    <li><?php echo JText::sprintf('COM_BOXSEARCH_CREATED_AT_LABEL', JHtml::_('date', $entry->created_at, JText::_('DATE_FORMAT_LC3'))); ?></li>
+                    <li><?php echo JText::sprintf('COM_BOXSEARCH_MODIFIED_AT_LABEL', JHtml::_('date', $entry->modified_at, JText::_('DATE_FORMAT_LC3'))); ?></li>
+                    <li><?php echo JText::_('COM_BOXSEARCH_CREATED_BY_LABEL'); ?><?php echo $entry->created_by->name; ?></li>
+               </ul>
+               <br />
+               <ul class="boxsearch">
+                    <?php if(isset($entry->shared_link->download_url)): ?>
+                         <li>
+                              <a href="<?php echo $entry->shared_link->download_url;?>">
+                                   <?php echo JText::_('COM_BOXSEARCH_DOWNLOAD_LINK');?>
+                              </a>
+                         </li>
+                    <?php endif; ?>
+                    <?php if(isset($entry->shared_link->url)): ?>
+                         <li>
+                              <a href="<?php echo $entry->shared_link->url;?>">
+                                   <?php echo JText::_('COM_BOXSEARCH_VIEW_LINK');?>
+                              </a>
+                         </li>
+                    <?php endif; ?>
+                    <li><?php echo BoxsearchHelper::formatBytes($entry->size); ?></li>
+               </ul>
+               <?php if ($entry->description): ?>
+                    <small>
+                         <?php echo $entry->description; ?>
+                    </small>
+               <?php endif; ?>
            </div>
         <div class="clearfix"></div>
         <hr />

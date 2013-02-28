@@ -19,6 +19,8 @@ class BoxsearchModelBoxsearch extends JModelLegacy
           $header =  array('Authorization: Bearer '.$token);
           // results
           $result = json_decode($box_api->get($url, $header));
+ 
+          
           return $result;
      }
      public function getToken()

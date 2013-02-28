@@ -14,6 +14,8 @@ JLoader::register('Rest_Client', __DIR__ . '/helpers/boxsearch_api.php');
 JLoader::register('Box_Rest_Client', __DIR__ . '/helpers/boxsearch_api.php');
 JLoader::register('BoxsearchHelper', __DIR__ . '/helpers/boxsearch.php');
 
+$doc = JFactory::getDocument();
+$doc->addStyleSheet('media/com_boxsearch/css/com_boxsearch.css');
 
 $controller = JControllerLegacy::getInstance('Boxsearch');	
 $controller->execute(JFactory::getApplication()->input->get('task'));
