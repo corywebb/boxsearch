@@ -3,7 +3,7 @@ defined( '_JEXEC' ) or die;
 
 class BoxsearchModelBoxsearch extends JModelLegacy
 {
-     public function getSearch()
+     public function getSearch($query)
      {
      	// app and params
      	$app = JFactory::getApplication();
@@ -12,7 +12,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
      	// use box api
      	$box_api = new Rest_Client;
      	// search url with query 
-     	$url = "https://api.box.com/2.0/search?query=".$app->input->get('query');
+     	$url = "https://api.box.com/2.0/search?query=".$query;
           // get token
           $token = $this->getToken();
           // curl header

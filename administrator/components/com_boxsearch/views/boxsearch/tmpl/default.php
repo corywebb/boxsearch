@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 <form action="<?php echo JRoute::_('index.php?option=com_boxsearch'); ?>" method="post" name="adminForm" id="adminForm">
      <div id="j-sidebar-container" class="span3">
-          <?php echo $this->sidebar; ?>
+          <?php // echo $this->sidebar; ?>
      </div>
      <div id="j-main-container" class="span9">
           <p>This extension must be configured before use. You must create a new app on box.com, create an API key, and client id, and client secret.</p>

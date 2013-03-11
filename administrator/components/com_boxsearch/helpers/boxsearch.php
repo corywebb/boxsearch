@@ -21,10 +21,15 @@ class BoxsearchHelper
       */
      public static function addSubmenu($vName)
      {
-         JHtmlSidebar::addEntry(
+         /*JHtmlSidebar::addEntry(
                     JText::_('COM_ROOTFLICK_SUBMENU_CP'),
                     'index.php?option=com_boxsearch',
                     $vName == 'boxsearch'
-         );
+         );*/
+         JSubMenuHelper::addEntry(
+			JText::_('COM_BOXSEARCH_SUBMENU_CP'),
+                    'index.php?option=com_boxsearch',
+                    $vName == 'boxsearch'
+		);
      }
 }

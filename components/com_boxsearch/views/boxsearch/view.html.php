@@ -16,7 +16,11 @@ class BoxsearchViewBoxsearch extends JViewLegacy
      
      public function display($tpl = null)
      {    
-     	$this->results = $this->get('search');
+		
+		$app = JFactory::getApplication();     
+     	$query = $app->input->get('query');
+     	$model = $this->getModel();
+     	$this->results = $model->getSearch($query);
      	$this->getKeys();
           parent::display();
      }

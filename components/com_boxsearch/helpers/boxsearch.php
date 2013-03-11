@@ -26,7 +26,9 @@ class BoxsearchHelper {
           // auth params
           $params = array('response_type'=>'code',
                            'client_id'=>$com_boxsearch_params->get('client_id'),
-                           'state'=>'authenticated');
+                           'state'=>'authenticated',
+                           'redirect_uri'=>$com_boxsearch_params->get('request_uri')
+                           );
                     
           // authenticate the app
           $auth = $auth_app->post($url,  $params);

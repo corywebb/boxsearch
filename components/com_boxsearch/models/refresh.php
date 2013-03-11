@@ -47,12 +47,9 @@ class BoxsearchModelRefresh extends JModelList
           $query->update($db->quoteName('#__boxsearch_keys'))->set($fields)->where($conditions);
           $db->setQuery($query);
           try {
- 
-               $result = $db->execute();
-          
-          } catch (Exception $e) {
-              // Catch the error.
+    			$result = $db->query(); // Use $db->execute() for Joomla 3.0.
+			} catch (Exception $e) {
+    		// Catch the error.
           }
-         
-     }
+      }
 }

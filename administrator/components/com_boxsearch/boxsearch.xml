@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="3.0" method="upgrade">
-     <name>Box.com API Search</name>
+<extension type="component" version="2.5" method="upgrade">
+     <name>com_boxsearch</name>
      <author>Cohesive Websites</author>
      <creationDate>Feb 2013</creationDate>
      <copyright>(C) 2013 Servant Holdings LLC
@@ -11,15 +11,48 @@
      <authorUrl>www.cohesivewebsites.com</authorUrl>
      <version>1.0</version>
      <description>COM_BOXSEARCH_DESCRIPTION</description>
-
+	
+	 <install>
+	 	<sql>
+	 		<file driver="sql" charset="utf8">sql/install.mysql.utf8.sql</file>
+	 	</sql>
+	 </install>
+	 
+	 <uninstall>
+	 	<sql>
+	 		<file driver="sql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+	 	</sql>
+	 </uninstall>
+	
+	 <files folder="site">
+	 	<filename>index.html</filename>
+	 	<filename>boxsearch.php</filename>
+	 	<filename>controller.php</filename>
+	 	<folder>controllers</folder>
+	 	<folder>helpers</folder>
+	 	<folder>models</folder>
+	 	<folder>views</folder>
+        <folder>language</folder>
+	 </files>
+	 
+	 <media destination="com_boxsearch" folder="media">
+                <filename>index.html</filename>
+                <folder>css</folder>
+                <folder>icons</folder>
+     </media> 
      <administration>
-          <menu img="class:contact">COM_SEARCH_ADMIN_MENU_LABEL</menu>
-       
+          <menu img="class:contact">Box Search</menu>
           <files folder="admin">
                <filename>boxsearch.php</filename>
                <filename>controller.php</filename>
                <filename>index.html</filename>
+               <filename>config.xml</filename>
+               <folder>helpers</folder>
+               <folder>sql</folder>
+               <folder>tables</folder>
+               <folder>views</folder>
+               <folder>language</folder>
           </files>
-     </administration>
+     </administration>   
 </extension>
 

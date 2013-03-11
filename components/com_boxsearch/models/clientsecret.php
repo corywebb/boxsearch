@@ -23,10 +23,12 @@ class BoxsearchModelClientsecret extends JModelList
 		$query->update($db->quoteName('#__boxsearch_keys'))->set($fields)->where($conditions);
 		$db->setQuery($query);
 		try {
-			$result = $db->execute();
-		} catch (Exception $e) {
-		    // Catch the error.
-		}
+			    // Execute the query in Joomla 2.5.
+			    $result = $db->query();
+		  }
+		  catch (Exception $e) {
+			    // catch any database errors.
+		  }
 		
 		$query = $db->getQuery(true);
           // set access token
@@ -39,14 +41,19 @@ class BoxsearchModelClientsecret extends JModelList
               );
           $query->update($db->quoteName('#__boxsearch_keys'))->set($fields)->where($conditions);
           $db->setQuery($query);
-          try {
- 
-               $result = $db->execute();
           
-          } catch (Exception $e) {
-              // Catch the error.
-          }
-         
+          try {
+			    // Execute the query in Joomla 2.5.
+			    $result = $db->query();
+		  }
+		  catch (Exception $e) {
+			    // catch any database errors.
+		  }
+          
+          //print_r($query->__toString());
+          //echo "setting secrets";
+          //exit ();
+     	
      }
      public function refresh()
      {
@@ -65,10 +72,8 @@ class BoxsearchModelClientsecret extends JModelList
 		
 		
 		// no result so we need to auth
-		if ($result->value == '')
+		if (!isset($result->value) || $result->value == '')
 		{
-			echo "no value";
-               // if there is no saved value we need to refresh!
 			return true;
 		}
           

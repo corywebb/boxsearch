@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.0" type="plugin" group="search">
-     <name>Boxsearch Plugin</name>
-     <author>Cohesive Websites</author>
-     <creationDate>March 1, 2013</creationDate>
-     <copyright>Copyright (C) 2013 Servant Holdings LLC</copyright>
-     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-     <authorEmail>chad@cohesivewebsites.com</authorEmail>
-     <authorUrl>www.cohesivewebsites.com</authorUrl>
-     <version>1.0</version>
-     <description>MOD_FOOTER_XML_DESCRIPTION</description>
-     <files>
-          <filename plugin="content">boxsearch.php</filename>
-     </files>
-     <config>
-          <fields name="params">
-
-               <fieldset name="basic">
-                    <field name="search_limit" type="text"
-                         default="50"
-                         description="PLG_SEARCH_CONTENT_FIELD_SEARCHLIMIT_DESC"
-                         label="PLG_SEARCH_CONTENT_FIELD_SEARCHLIMIT_LABEL"
-                         size="5"
-                    />
-               </fieldset>
-
-          </fields>
-     </config>
+<extension version="2.5" type="plugin" group="search">
+	<name>boxsearch</name>
+	<author>Cohesive Websites</author>
+	<creationDate>March 11 2013</creationDate>
+	<copyright>Cohesive 2013</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>chad@cohesivewebsites.com</authorEmail>
+	<authorUrl>www.cohesivewebsites.com</authorUrl>
+	<version>1.0</version>
+	<description>Search plugin for box.com</description>
+	<files>
+		<filename plugin="boxsearch">box.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="search_limit" type="text"
+					default="50"
+					description="PLG_SEARCH_CONTENT_FIELD_SEARCHLIMIT_DESC"
+					label="PLG_SEARCH_CONTENT_FIELD_SEARCHLIMIT_LABEL"
+					size="5"
+				/>
+				<field name="download_type" type="list"
+					default="share"
+					description="Type of URL for boxsearch results"
+					label="Download Type"
+				>
+					<option value="share">Use Share URL</option>
+					<option value="direct">Use Direct URL</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
 </extension>

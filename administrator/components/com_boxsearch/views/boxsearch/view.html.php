@@ -17,7 +17,7 @@ class BoxsearchViewBoxsearch extends JViewLegacy
      {    
      	$this->addToolbar();
      	BoxsearchHelper::addSubmenu('boxsearch');
-     	$this->sidebar = JHtmlSidebar::render();
+     	//$this->sidebar = JHtmlSidebar::render();
      	$this->getKeys();
      	
      	parent::display($tpl);
@@ -25,6 +25,7 @@ class BoxsearchViewBoxsearch extends JViewLegacy
      
      protected function addToolbar()
      {
+     	
      	JToolbarHelper::title(JText::_('COM_BOXSEARCH_COMPONENT_TITLE'), 'contact.png');
      	JToolbarHelper::preferences('com_boxsearch');
      }

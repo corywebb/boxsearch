@@ -27,6 +27,13 @@
                         description="COM_BOXSEARCH_CONFIG_API_CLIENT_SECRET_DESC"
                         default=""
                 />
+                 <field
+                        name="redirect_uri"
+                        type="text"
+                        label="COM_BOXSEARCH_CONFIG_API_REDIRECT_URI_LABEL"
+                        description="COM_BOXSEARCH_CONFIG_REDIRECT_URI_DESC"
+                        default=""
+                />
                 <field
                          name="refresh_token_expire"
                          type="text"
