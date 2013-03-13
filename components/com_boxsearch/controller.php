@@ -9,6 +9,9 @@
 
 class BoxsearchController extends JControllerLegacy
 {
+    
+
+    
 public function __construct($config = array())
      {
      	JLoader::register('BoxsearchHelper', __DIR__ . '/helpers/boxsearch.php');

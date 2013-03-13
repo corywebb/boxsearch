@@ -60,6 +60,7 @@
                          </li>
                     <?php endif; ?>
                     <li><?php echo BoxsearchHelper::formatBytes($entry->size); ?></li>
+                    <li><?php echo JText::_('COM_BOXSEARCH_LOCATED_IN') .  $entry->parent->name; ?></li>
                </ul>
                <?php if ($entry->description): ?>
                     <small>

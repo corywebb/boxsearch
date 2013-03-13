@@ -5,4 +5,13 @@
 			
 		</message>
 	</layout>
+    <fields name="params">
+        <fieldset name="basic" label="Options">
+    	    <field name="filter" type="field"
+    		    label="Filter"
+    			description="Filter by this term"
+                size="20"
+                    />
+            </fieldset>
+        </fields>
 </metadata>

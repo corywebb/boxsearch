@@ -9,17 +9,27 @@
 
 class BoxsearchViewBoxsearch extends JViewLegacy
 {    
-	protected     $api_key       = '';
+
+     protected     $api_key       = '';
      protected     $client_id     = '';
      protected     $auth_secret   = '';
-	protected     $results       = '';
-     
+     protected     $results       = '';
+     public        $filter;
+         
      public function display($tpl = null)
      {    
 		
 		$app = JFactory::getApplication();     
      	$query = $app->input->get('query');
      	$model = $this->getModel();
+        
+        if ($menu = $app->getMenu()->getActive()) {
+              $menuParams = new JRegistry;
+        	  $menuParams->loadString($menu->params);
+              $filter =  $menuParams->get('filter');
+              $app->input->set('filter', $filter);
+        }
+        
      	$this->results = $model->getSearch($query);
      	$this->getKeys();
           parent::display();
