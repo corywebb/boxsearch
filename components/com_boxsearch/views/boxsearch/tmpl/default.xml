@@ -7,11 +7,23 @@
 	</layout>
     <fields name="params">
         <fieldset name="basic" label="Options">
-    	    <field name="filter" type="field"
-    		    label="Filter"
-    			description="Filter by this term"
+    	    <field name="filter_id" type="field"
+    		    label="Filter Folder ID"
+    			description="Filter by folder id"
                 size="20"
                     />
+                <field name="filter_label" type="field"
+                    label="Filter Label"
+                    description="The label of the folder id"
+                    size="20"
+                    />
+                    <field name="enable_upload" type="list"
+                        label="Enable Uploads"
+                        description="Enable upload feature"    
+                    >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
             </fieldset>
         </fields>
 </metadata>

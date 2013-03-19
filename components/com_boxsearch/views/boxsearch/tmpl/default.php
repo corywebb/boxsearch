@@ -6,6 +6,12 @@
  * @copyright       Copyright (C) 2013 Servant Holdings LLC
  * @license         GNU General Public License version 3
  */
+
+ // get app
+ $app = JFactory::getApplication();
+ $menu = $app->getMenu()->getActive();
+ $menuParams   = new JRegistry;
+ $menuParams->loadString($menu->params);
 ?>
 
 <div class="span9">
@@ -18,10 +24,18 @@
           </fieldset>
           <input type="submit" class="btn" />
      </form>
+     <?php if ($menuParams->get('enable_upload')): ?>
+     	<?php echo $this->loadTemplate('upload'); ?>
+     <?php endif; ?>
 </div>
 <div class="clearfix"></div>
 <?php if (isset($this->results->entries)): ?>
-<h5><?php echo JText::_('COM_BOXSEARCH_RESULTS_LABEL'); ?></h5>
+<h5>
+	<?php echo JText::_('COM_BOXSEARCH_RESULTS_LABEL'); ?>
+	<?php if($app->input->get('filter_label')): ?>
+		<?php echo JText::_('COM_BOXSEARCH_FILTER_LABEL'); ?><?php echo $app->input->get('filter_label'); ?>
+	<?php endif; ?>
+</h5>
 <?php foreach ($this->results->entries as $entry):?>
     <div class="boxsearch-item">
           <?php if(isset($entry->shared_link->download_url)): ?>
@@ -37,7 +51,9 @@
 	               <?php else: ?>
 	                    <?php echo $entry->name; ?>
 	               <?php endif; ?>
+	               
 	          </h4>
+	         
 	          <ul class="boxsearch">
                     <li><?php echo JText::sprintf('COM_BOXSEARCH_CREATED_AT_LABEL', JHtml::_('date', $entry->created_at, JText::_('DATE_FORMAT_LC3'))); ?></li>
                     <li><?php echo JText::sprintf('COM_BOXSEARCH_MODIFIED_AT_LABEL', JHtml::_('date', $entry->modified_at, JText::_('DATE_FORMAT_LC3'))); ?></li>

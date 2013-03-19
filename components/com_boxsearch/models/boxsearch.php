@@ -20,9 +20,8 @@ class BoxsearchModelBoxsearch extends JModelLegacy
         $header =  array('Authorization: Bearer '.$token);
         // results
         $results = json_decode($box_api->get($url, $header));
- 	
       
-        if ($app->input->get('filter') && $query) {
+        if ($app->input->get('filter_id') && $query) {
             //filter results
            $results = $this->filterResults($results);
         }
@@ -51,23 +50,24 @@ class BoxsearchModelBoxsearch extends JModelLegacy
      {
          
          $app = JFactory::getApplication();
-         $pattern = "/".$app->input->get('filter')."/i";
- 
+         $pattern = $app->input->get('filter_id');
          // loop through results to remove unwanted results
-         for ($i = 0; $i <= count($results); $i++)
+         for ($i = 0; $i <= count($results->entries)+1; $i++)
          {
+
              // loop through path way to find matches and remove if not found.
              foreach ($results->entries[$i]->path_collection->entries as $result)
              {
                  $matches = array();
                  // check for matches. if not found add index to array
-                 if (!preg_match($pattern, $result->name))
+                 if ($pattern === $result->id)
                  {
                      $matches[] = $i;
+                     break 1;
                  }
              }
              // if the index is in our array we remove it from the results array
-             if (in_array($i, $matches))
+             if (!in_array($i, $matches))
              {
                  unset($results->entries[$i]);
              }
@@ -75,5 +75,48 @@ class BoxsearchModelBoxsearch extends JModelLegacy
          
          // return the modified results array to the model
          return $results;
+     }
+     
+     public function uploadFile($file)
+     {
+     	// app and params
+     	$app = JFactory::getApplication();
+     	$params = JComponentHelper::getParams('com_boxsearch');
+     	
+     	// use box api
+     	$box_api = new Rest_Client;
+     	// search url with query 
+     	$url = "https://api.box.com/2.0/files/content";
+        // get token
+        $token = $this->getToken();
+
+		echo $file['tmp_name'];
+        // curl header
+        $header =  array('Authorization: Bearer '.$token);
+        $opt = array();
+        $opt['filename'] = "@".$file['tmp_name'];
+        $opt['parent_id'] = $app->input->get('filter_id');
+        // results
+        $results = $box_api->post($url, $opt, $header);
+		
+		print_r($results);
+		
+     }
+     
+     
+     public function uploadFileOld($file)
+     {
+     	$app = JFactory::getApplication();
+     	$params = JComponentHelper::getParams('com_boxsearch');
+     	$box_api = new Box_Rest_Client($params->get('api_key'));
+     	$box_api->auth_token = $this->getToken();
+
+     	/*
+     	$file = new Box_Client_File($file['tmp_name'], $file['name']);
+     	$file->attr('folder_id', $app->input->get('filter_id'));
+     	*/
+     	echo ($box_api->upload($file));
+     	
+     	return $upload;
      }
 }

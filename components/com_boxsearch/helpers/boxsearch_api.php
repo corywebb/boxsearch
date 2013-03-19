@@ -204,7 +204,7 @@ class Box_Rest_Client {
      
      public $api_version = '2.0';
      public $base_url = 'https://api.box.com';
-     public $upload_url = 'https://upload.box.net/api';
+     public $upload_url = 'https://upload.box.com/api';
 
      // Not implemented yet sadly..
      public $MOBILE = false;
@@ -416,7 +416,10 @@ class Box_Rest_Client {
           $params['file'] = '@'.$file->attr('localpath');
           
           $res = Rest_Client::post($url,$params);
-
+			
+			print_r($url);
+			print_r($res);
+			exit();
 
           // This exists because the API returns malformed xml.. as soon as the API
           // is fixed it will automatically check against the parsed XML instead of

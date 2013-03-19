@@ -14,6 +14,7 @@ class BoxsearchViewBoxsearch extends JViewLegacy
      protected     $client_id     = '';
      protected     $auth_secret   = '';
      protected     $results       = '';
+     protected	   $upload		  = '';	
      public        $filter;
          
      public function display($tpl = null)
@@ -21,18 +22,34 @@ class BoxsearchViewBoxsearch extends JViewLegacy
 		
 		$app = JFactory::getApplication();     
      	$query = $app->input->get('query');
+     	$upload = $app->input->get('action');
      	$model = $this->getModel();
         
         if ($menu = $app->getMenu()->getActive()) {
-              $menuParams = new JRegistry;
+              $menuParams   = new JRegistry;
         	  $menuParams->loadString($menu->params);
-              $filter =  $menuParams->get('filter');
-              $app->input->set('filter', $filter);
+              $filter_id    =  $menuParams->get('filter_id');
+              $filter_label =  $menuParams->get('filter_label');
+              $app->input->set('filter_id', $filter_id);
+              $app->input->set('filter_label', $filter_label);
+              
         }
         
-     	$this->results = $model->getSearch($query);
+        // show search results
+        if (!empty($query)) {
+     		$this->results = $model->getSearch($query);
+     	}
+     	
+     	// uploaded file
+     	if (!empty($upload) && $upload == 'upload_file') {
+     		$JFile = new JInputFiles;
+     		$file = $JFile->get('file');
+     		print_r($file);
+     		$model->uploadFile($file);
+     	}
+     	
      	$this->getKeys();
-          parent::display();
+        parent::display();
      }
      
      protected function getKeys()
