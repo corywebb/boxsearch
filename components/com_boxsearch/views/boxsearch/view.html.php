@@ -35,17 +35,28 @@ class BoxsearchViewBoxsearch extends JViewLegacy
               
         }
         
-        // show search results
-        if (!empty($query)) {
-     		$this->results = $model->getSearch($query);
-     	}
+        
      	
      	// uploaded file
      	if (!empty($upload) && $upload == 'upload_file') {
      		$JFile = new JInputFiles;
      		$file = $JFile->get('file');
-     		print_r($file);
-     		$model->uploadFile($file);
+            $path = "tmp/" . JFile::makeSafe($file['name']);
+            JFile::copy($file['tmp_name'], $path);
+     		$upload = $model->uploadFile($path);
+     		if (!empty($upload->type) && $upload->type == 'error') {
+                
+     		    echo $upload->code;
+     		}
+            else {
+                echo "SUCCESS";
+            }
+            JFile::delete($path);
+     	}
+        
+        // show search results
+        if (!empty($query)) {
+     		$this->results = $model->getSearch($query);
      	}
      	
      	$this->getKeys();

@@ -28,7 +28,6 @@ public function __construct($config = array())
           // do we need to refresh
           if ($refresh)
           {    
-               echo "authenticate";
                JFactory::getApplication()->input->set('task', 'authenticate');
           }
           

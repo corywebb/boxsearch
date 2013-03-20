@@ -134,13 +134,16 @@ class Rest_Client {
       * @param string $url
       * @param array $params A list of post-based params to pass
       */
-     public static function post($url,array $params = array()) {
+     public static function post($url,array $params = array(), array $header = array()) {
           $ch = curl_init();
           curl_setopt($ch, CURLOPT_URL, $url);
           curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
           curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+          curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
           curl_setopt($ch, CURLOPT_POST, true);
           curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+          $information = curl_getinfo($ch);
+          print_r($information);
           $data = curl_exec($ch);
           curl_close($ch);
           
@@ -351,7 +354,7 @@ class Box_Rest_Client {
           $url = '';
           switch(strtolower($type)) {
                case 'upload':
-                    $url = $this->upload_url.'/'.$this->api_version.'/upload/'.$this->auth_token.'/'.$id;
+                    $url = 'https://api.box.com/2.0/files/content';
                     break;
                case 'overwrite':
                     $url = $this->upload_url.'/'.$this->api_version.'/overwrite/'.$this->auth_token.'/'.$id;
@@ -383,8 +386,9 @@ class Box_Rest_Client {
       * @param bool $upload_then_delete If set, it will delete the file if the upload was successful
       * 
       */
-     public function upload(Box_Client_File &$file, array $params = array(), $upload_then_delete = false) {
-          if(array_key_exists('new_copy', $params) && $params['new_copy'] && intval($file->attr('id')) !== 0) {
+     public function upload(Box_Client_File &$file, array $header = array(), array $params = array(), $upload_then_delete = false) {
+         
+         /* if(array_key_exists('new_copy', $params) && $params['new_copy'] && intval($file->attr('id')) !== 0) {
                // This is a valid file for new copy, we can new_copy
                $url = $this->upload_url('new_copy',$file->attr('id'));
           }
@@ -395,7 +399,9 @@ class Box_Rest_Client {
           else {
                // This file is a new upload
                $url = $this->upload_url('upload',$file->attr('folder_id'));
-          }
+          }*/
+          
+          $url = $this->upload_url('upload');
           
           // assign a file name during construction OR by setting $file->attr('filename'); 
           // manually
@@ -414,13 +420,10 @@ class Box_Rest_Client {
           }
 
           $params['file'] = '@'.$file->attr('localpath');
+          $params['folder_id'] = $file->attr('folder_id');
           
-          $res = Rest_Client::post($url,$params);
+          $res = Rest_Client::post($url,$params, $header);
 			
-			print_r($url);
-			print_r($res);
-			exit();
-
           // This exists because the API returns malformed xml.. as soon as the API
           // is fixed it will automatically check against the parsed XML instead of
           // the string. When that happens, there will be a minor update to the library.

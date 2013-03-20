@@ -21,9 +21,15 @@ class BoxsearchModelBoxsearch extends JModelLegacy
         // results
         $results = json_decode($box_api->get($url, $header));
       
-        if ($app->input->get('filter_id') && $query) {
-            //filter results
+        if ($app->input->get('filter_id') && $query)
+        {
+           //filter results
            $results = $this->filterResults($results);
+        }
+        if ($params->get('hide_unshared'))
+        {
+            echo "hiding unshared";
+            $results = $this->hideUnsharedLinks($results);
         }
         
        return $results;
@@ -54,30 +60,84 @@ class BoxsearchModelBoxsearch extends JModelLegacy
          // loop through results to remove unwanted results
          for ($i = 0; $i <= count($results->entries)+1; $i++)
          {
-
-             // loop through path way to find matches and remove if not found.
-             foreach ($results->entries[$i]->path_collection->entries as $result)
+             if (isset($results->entries[$i]->path_collection->entries))
              {
-                 $matches = array();
-                 // check for matches. if not found add index to array
-                 if ($pattern === $result->id)
+                 // loop through path way to find matches and remove if not found.
+                 foreach ($results->entries[$i]->path_collection->entries as $result)
                  {
-                     $matches[] = $i;
-                     break 1;
+                     $matches = array();
+                     // check for matches. if not found add index to array
+                     if ($pattern === $result->id)
+                     {
+                         $matches[] = $i;
+                         break 1;
+                     }
                  }
-             }
-             // if the index is in our array we remove it from the results array
-             if (!in_array($i, $matches))
-             {
-                 unset($results->entries[$i]);
-             }
+                 // if the index is in our array we remove it from the results array
+                 if (!in_array($i, $matches))
+                 {
+                     unset($results->entries[$i]);
+                 }
+             }//end isset if
          }
          
          // return the modified results array to the model
          return $results;
      }
      
+     public function hideUnsharedLinks($results)
+     {
+         
+         $app = JFactory::getApplication();
+         $pattern = $app->input->get('filter_id');
+         
+         $matches = array();
+         // loop through results to remove unwanted results
+         $i = 0;
+         foreach ($results->entries as $entries)
+         {
+             // if there's no share link, remove the entry
+             if (!$entries->shared_link)
+             {
+                 unset($results->entries[$i]);
+             }
+             $i++;
+         }
+
+         return $results;
+     }
+     
      public function uploadFile($file)
+     {
+         $url = 'https://api.box.com/2.0/files/content';
+         $app = JFactory::getApplication();
+         
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_ENCODING, "UTF-8");
+
+            $token = $this->getToken();
+            
+            //this is my method to construct the Authorisation header
+            $header_details = array('Authorization: Bearer '.$token);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $header_details);
+
+            $post_vars = array();
+            $post_vars['filename'] = "@".$file;
+            $post_vars['parent_id'] = $app->input->get('filter_id');
+
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_vars);
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);            
+            $data = curl_exec($ch);
+            curl_close($ch);
+            return json_decode($data);
+     }
+     
+     public function uploadOlderFile($file)
      {
      	// app and params
      	$app = JFactory::getApplication();
@@ -86,18 +146,19 @@ class BoxsearchModelBoxsearch extends JModelLegacy
      	// use box api
      	$box_api = new Rest_Client;
      	// search url with query 
-     	$url = "https://api.box.com/2.0/files/content";
+     	$url = "https://upload.box.com/api/2.0/files/content";
         // get token
         $token = $this->getToken();
 
-		echo $file['tmp_name'];
+		//echo $file['tmp_name'];
         // curl header
         $header =  array('Authorization: Bearer '.$token);
         $opt = array();
-        $opt['filename'] = "@".$file['tmp_name'];
-        $opt['parent_id'] = $app->input->get('filter_id');
+        $opt['filename'] = "\"@".$file['tmp_name']."\"";
+        $opt['folder_id'] = "0";//$app->input->get('filter_id');
+        print_r($opt);
         // results
-        $results = $box_api->post($url, $opt, $header);
+        $results = $box_api->post($url, $header, $opt);
 		
 		print_r($results);
 		

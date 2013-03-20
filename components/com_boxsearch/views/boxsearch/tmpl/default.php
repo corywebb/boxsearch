@@ -47,7 +47,7 @@
           <div class="span11">
 	          <h4>
 	               <?php if(isset($entry->shared_link->download_url)):?>
-	                    <a href="<?php echo $entry->shared_link->download_url; ?>"><?php echo $entry->name; ?></a>
+	                    <a href="<?php echo $entry->shared_link->download_url; ?>" target="_blank"><?php echo $entry->name; ?></a>
 	               <?php else: ?>
 	                    <?php echo $entry->name; ?>
 	               <?php endif; ?>

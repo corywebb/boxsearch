@@ -41,6 +41,15 @@
                          description="COM_BOXSEARCH_CONFIG_API_REFRESH_TOKEN_EXPIRE_DESC"
                          default="14"
                 />
- 
+                <field
+                         name="hide_unshared"
+                         type="list"
+                         label="COM_BOXSEARCH_CONFIG_HIDE_UNSAHRED_LABEL"
+                         description="COM_BOXSEARCH_CONFIG_HIDE_UNSAHRED_DESC"
+                         default="14"
+                >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
         </fieldset>
 </config>
