@@ -16,6 +16,7 @@ class BoxsearchViewBoxsearch extends JViewLegacy
      protected     $results       = '';
      protected	   $upload		  = '';	
      public        $filter;
+     protected     $subfolders;
          
      public function display($tpl = null)
      {    
@@ -23,6 +24,7 @@ class BoxsearchViewBoxsearch extends JViewLegacy
 		$app = JFactory::getApplication();     
      	$query = $app->input->get('query');
      	$upload = $app->input->get('action');
+        $subfolder = $app->input->get('subfolders');
      	$model = $this->getModel();
         
         if ($menu = $app->getMenu()->getActive()) {
@@ -32,13 +34,14 @@ class BoxsearchViewBoxsearch extends JViewLegacy
               $filter_label =  $menuParams->get('filter_label');
               $app->input->set('filter_id', $filter_id);
               $app->input->set('filter_label', $filter_label);
-              
+              $this->subfolders = $model->getSubfolders($filter_id);
         }
         
         
-     	
+
      	// uploaded file
-     	if (!empty($upload) && $upload == 'upload_file') {
+     	if (!empty($upload) && $upload == 'upload_file')
+        {
      		$JFile = new JInputFiles;
      		$file = $JFile->get('file');
             $path = "tmp/" . JFile::makeSafe($file['name']);
@@ -55,7 +58,8 @@ class BoxsearchViewBoxsearch extends JViewLegacy
      	}
         
         // show search results
-        if (!empty($query)) {
+        if (!empty($query))
+        {
      		$this->results = $model->getSearch($query);
      	}
      	

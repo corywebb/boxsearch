@@ -180,4 +180,37 @@ class BoxsearchModelBoxsearch extends JModelLegacy
      	
      	return $upload;
      }
+     
+     public function getSubFolders($folder_id)
+     {
+      	// app and params
+      	$app = JFactory::getApplication();
+      	$params = JComponentHelper::getParams('com_boxsearch');
+     	
+      	// use box api
+      	$box_api = new Rest_Client;
+      	// search url with query 
+        $url = "https://api.box.com/2.0/folders/".$folder_id;
+        // get token
+        $token = $this->getToken();
+
+        // curl header
+        $header =  array('Authorization: Bearer '.$token);
+        // results
+        $folders = json_decode($box_api->get($url, $header));
+        
+        $subfolders = array();
+        
+        foreach($folders->item_collection->entries as $item)
+        {
+            if ($item->type == 'folder') {
+                $subfolder = new stdClass;
+                $subfolder->name = $item->name;
+                $subfolder->id = $item->id;
+                $subfolders[] = $subfolder;
+            }
+
+        }
+        return $subfolders;
+     }
 }

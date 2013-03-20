@@ -19,8 +19,14 @@
      <form name="boxsearch" id="boxsearch" method="post">
           <fieldset>
                <label><?php echo JText::_('COM_BOXSEARCH_FORM_LABEL')?></label>
-               <input type="text" name="query" size="20" class="input" placeholder="Search Query" /> 
-               
+               <input type="text" name="query" size="20" class="input" placeholder="Search Query" />
+               <?php if ($this->subfolders): ?>
+                   <select name="subfolders">
+                       <?php foreach($this->subfolders as $folder): ?>
+                           <option value="<?php echo $folder->id; ?>"><?php echo $folder->name; ?></option>
+                       <?php endforeach; ?>
+                   </select>
+               <?php endif; ?>
           </fieldset>
           <input type="submit" class="btn" />
      </form>
