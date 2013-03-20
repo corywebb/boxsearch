@@ -53,7 +53,7 @@
           <div class="span11">
 	          <h4>
 	               <?php if(isset($entry->shared_link->download_url)):?>
-	                    <a href="<?php echo $entry->shared_link->download_url; ?>" target="_blank"><?php echo $entry->name; ?></a>
+	                    <a target="blank" href="<?php echo $entry->shared_link->download_url; ?>" target="_blank"><?php echo $entry->name; ?></a>
 	               <?php else: ?>
 	                    <?php echo $entry->name; ?>
 	               <?php endif; ?>
@@ -69,14 +69,14 @@
                <ul class="boxsearch">
                     <?php if(isset($entry->shared_link->download_url)): ?>
                          <li>
-                              <a href="<?php echo $entry->shared_link->download_url;?>">
+                              <a target="blank" href="<?php echo $entry->shared_link->download_url;?>">
                                    <?php echo JText::_('COM_BOXSEARCH_DOWNLOAD_LINK');?>
                               </a>
                          </li>
                     <?php endif; ?>
                     <?php if(isset($entry->shared_link->url)): ?>
                          <li>
-                              <a href="<?php echo $entry->shared_link->url;?>">
+                              <a target="blank" href="<?php echo $entry->shared_link->url;?>">
                                    <?php echo JText::_('COM_BOXSEARCH_VIEW_LINK');?>
                               </a>
                          </li>
