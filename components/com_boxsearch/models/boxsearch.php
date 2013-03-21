@@ -20,16 +20,41 @@ class BoxsearchModelBoxsearch extends JModelLegacy
         $header =  array('Authorization: Bearer '.$token);
         // results
         $results = json_decode($box_api->get($url, $header));
+        
+        if ($params->get('debug'))
+        {
+        	echo "<pre>";
+        	echo "<h4>"."Unfiltered Results"."</h4>";
+        	print_r($results);
+        	echo "</pre>";
+        }
       
         if ($app->input->get('filter_id') && $query)
         {
            //filter results
            $results = $this->filterResults($results);
         }
+        
+        if ($params->get('debug'))
+        {
+        	echo "<pre>";
+        	echo "<h4>"."After Filtering"."</h4>";
+        	print_r($results);
+        	echo "</pre>";
+        }
+        
         if ($params->get('hide_unshared'))
         {
             echo "hiding unshared";
             $results = $this->hideUnsharedLinks($results);
+        }
+        
+        if ($params->get('debug'))
+        {
+        	echo "<pre>";
+        	echo "<h4>"."After Unshared Removed"."</h4>";
+        	print_r($results);
+        	echo "</pre>";
         }
         
        return $results;
@@ -54,7 +79,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
      
      public function filterResults($results)
      {
-         
+         $params = JComponentHelper::getParams('com_boxsearch');
          $app = JFactory::getApplication();
          $pattern = $app->input->get('filter_id');
          // loop through results to remove unwanted results
@@ -80,14 +105,14 @@ class BoxsearchModelBoxsearch extends JModelLegacy
                  }
              }//end isset if
          }
-         
+
          // return the modified results array to the model
          return $results;
      }
      
      public function hideUnsharedLinks($results)
      {
-         
+         $params = JComponentHelper::getParams('com_boxsearch');
          $app = JFactory::getApplication();
          $pattern = $app->input->get('filter_id');
          
@@ -103,7 +128,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
              }
              $i++;
          }
-
+			
          return $results;
      }
      

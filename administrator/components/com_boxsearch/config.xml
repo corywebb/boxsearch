@@ -51,5 +51,15 @@
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
+                 <field
+                         name="debug"
+                         type="list"
+                         label="COM_BOXSEARCH_CONFIG_ENABLE_DEBUG_LABEL"
+                         description="COM_BOXSEARCH_CONFIG_ENABLE_DEBUG_DESC"
+                         default="14"
+                >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
         </fieldset>
 </config>
