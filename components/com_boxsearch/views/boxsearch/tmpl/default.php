@@ -12,6 +12,7 @@
  $menu = $app->getMenu()->getActive();
  $menuParams   = new JRegistry;
  $menuParams->loadString($menu->params);
+ $params = JComponentHelper::getParams('com_boxsearch');
 ?>
 
 <div class="span9">
@@ -57,7 +58,6 @@
 	               <?php else: ?>
 	                    <?php echo $entry->name; ?>
 	               <?php endif; ?>
-	               
 	          </h4>
 	         
 	          <ul class="boxsearch">
@@ -83,7 +83,11 @@
                     <?php endif; ?>
                     <li><?php echo BoxsearchHelper::formatBytes($entry->size); ?></li>
                     <li><?php echo JText::_('COM_BOXSEARCH_LOCATED_IN') .  $entry->parent->name; ?></li>
+                    
                </ul>
+               <?php if ($params->get('debug')): ?>
+               		<pre><?php print_r($entry); ?></pre>
+               <?php endif; ?>
                <?php if ($entry->description): ?>
                     <small>
                          <?php echo $entry->description; ?>

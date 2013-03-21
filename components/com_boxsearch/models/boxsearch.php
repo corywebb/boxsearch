@@ -20,43 +20,20 @@ class BoxsearchModelBoxsearch extends JModelLegacy
         $header =  array('Authorization: Bearer '.$token);
         // results
         $results = json_decode($box_api->get($url, $header));
-        
-        if ($params->get('debug'))
-        {
-        	echo "<pre>";
-        	echo "<h4>"."Unfiltered Results"."</h4>";
-        	print_r($results);
-        	echo "</pre>";
-        }
-      
+    	
         if ($app->input->get('filter_id') && $query)
         {
            //filter results
            $results = $this->filterResults($results);
         }
-        
-        if ($params->get('debug'))
-        {
-        	echo "<pre>";
-        	echo "<h4>"."After Filtering"."</h4>";
-        	print_r($results);
-        	echo "</pre>";
-        }
-        
+                 
         if ($params->get('hide_unshared'))
         {
-            echo "hiding unshared";
+            //echo "hiding unshared";
             $results = $this->hideUnsharedLinks($results);
         }
         
-        if ($params->get('debug'))
-        {
-        	echo "<pre>";
-        	echo "<h4>"."After Unshared Removed"."</h4>";
-        	print_r($results);
-        	echo "</pre>";
-        }
-        
+            
        return $results;
      }
      
@@ -82,32 +59,37 @@ class BoxsearchModelBoxsearch extends JModelLegacy
          $params = JComponentHelper::getParams('com_boxsearch');
          $app = JFactory::getApplication();
          $pattern = $app->input->get('filter_id');
+         
+         $resultsStore = $results;
+         $matches = array();
          // loop through results to remove unwanted results
+         
          for ($i = 0; $i <= count($results->entries)+1; $i++)
          {
-             if (isset($results->entries[$i]->path_collection->entries))
-             {
-                 // loop through path way to find matches and remove if not found.
-                 foreach ($results->entries[$i]->path_collection->entries as $result)
-                 {
-                     $matches = array();
-                     // check for matches. if not found add index to array
-                     if ($pattern === $result->id)
-                     {
-                         $matches[] = $i;
-                         break 1;
-                     }
-                 }
-                 // if the index is in our array we remove it from the results array
-                 if (!in_array($i, $matches))
-                 {
-                     unset($results->entries[$i]);
-                 }
-             }//end isset if
-         }
-
+         	foreach ($results->entries[$i]->path_collection->entries as $result)
+         	{
+         		if ($result->id == $pattern)
+         		{
+         			$matches[] = $i;
+         			break 1;
+         		}
+         	}
+         	
+        }
+             
+        $x=0;
+		foreach ($results->entries as $entry)
+        {
+        	
+        	if (!in_array($x, $matches))
+        	{
+        		unset($resultsStore->entries[$x]);
+        	}
+        	$x++;
+        }
+		
          // return the modified results array to the model
-         return $results;
+         return $resultsStore;
      }
      
      public function hideUnsharedLinks($results)
@@ -116,20 +98,24 @@ class BoxsearchModelBoxsearch extends JModelLegacy
          $app = JFactory::getApplication();
          $pattern = $app->input->get('filter_id');
          
+         // store the object here so we can remove things.
+         $results->entries = array_values($results->entries);
+         
+         $resultsStore = $results;
+         
          $matches = array();
-         // loop through results to remove unwanted results
-         $i = 0;
-         foreach ($results->entries as $entries)
+ 
+         for ($i = 0; $i <= count($results->entries) +1; $i++)
          {
-             // if there's no share link, remove the entry
-             if (!$entries->shared_link)
-             {
-                 unset($results->entries[$i]);
-             }
-             $i++;
+         	if ($results->entries[$i]->shared_link == null || !($results->entries[$i]->shared_link->url))
+         	{
+         		unset($resultsStore->entries[$i]);
+         	}
          }
-			
-         return $results;
+               
+         //echo count($resultsStore->entries);
+         
+         return $resultsStore;
      }
      
      public function uploadFile($file)
