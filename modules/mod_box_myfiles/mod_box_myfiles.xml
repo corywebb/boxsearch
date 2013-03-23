@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension 	type="module"	version="2.5"	client="site"	method="upgrade">
+	<name>Box MyFiles</name>
+	<author>Philip Locke</author>
+	<creationDate>March 2013</creationDate>
+	<copyright>Copyright (C) 2011 - 2012. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later;</license>
+	<authorEmail>fastnetwebdesign@gmail.com</authorEmail>
+	<authorUrl>www.joostrap.com</authorUrl>
+	<version>1.0.0</version>
+	<description>
+		<![CDATA[
+			<p><strong>Box.com - My Files.</strong></p><p>1. Enter a Box.com Folder ID to filter your files.</p><p>2. Place this module in a module position or use {loadposition xxx}</p>
+		]]>
+	</description>
+	<files>
+		<filename module="mod_box_myfiles">mod_box_myfiles.php</filename>
+		<folder>tmpl</folder>
+		<filename>index.html</filename>		
+		<filename>mod_box_myfiles.xml</filename>
+	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.mod_box_myfiles.ini</language>
+		<language tag="en-GB">en-GB/en-GB.mod_box_myfiles.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field 
+						name="folderid" 
+						type="text" 
+						default="" 
+						label="MOD_BOX_MYFILES_FIELD_COUNT_LABEL" 
+						description="MOD_BOX_MYFILES_FIELD_COUNT_DESC" />
+				<field
+						name="moduleclass_sfx"
+						type="text"
+						label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+						description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>

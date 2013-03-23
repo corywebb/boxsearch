@@ -24,7 +24,8 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		if ($app->input->get('filter_id') && $query)
 		{
 			//filter results
-			$results = $this->filterResults($results);
+			$pattern = $app->input->get('filter_id');
+			$results = $this->filterResults($results, $pattern);
 		}
 			
 		if ($params->get('hide_unshared'))
@@ -54,11 +55,10 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 	 * essentially a filtered search
 	 */
 
-	public function filterResults($results)
+	public function filterResults($results, $pattern)
 	{
 		$params = JComponentHelper::getParams('com_boxsearch');
 		$app = JFactory::getApplication();
-		$pattern = $app->input->get('filter_id');
 			
 		// store copy here to delete from
 		$resultsStore = $results;
@@ -79,7 +79,6 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 					break 1;
 				}
 			}
-
 		}
 
 		// counter
