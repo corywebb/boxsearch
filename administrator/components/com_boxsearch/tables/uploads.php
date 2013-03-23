@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @subpackage  com_categories
  * @since       1.6
  */
-class BoxsearchTableKeys extends JTable
+class BoxsearchUploadsKeys extends JTable
 {    
      /**
       * Constructor
@@ -25,6 +25,6 @@ class BoxsearchTableKeys extends JTable
       */
      public function __construct(&$db)
      {    
-          parent::__construct('#__boxsearch_keys', 'id', $db);
+          parent::__construct('#__boxsearch_uploads', 'id', $db);
      }
 }
