@@ -31,10 +31,11 @@ class BoxsearchModuleHelper
           
           if (isset($folder))
           {
-          	$tmp->entries = $com_model->filterResults($files, $folder);
-          	$files = $com_model->hideUnsharedLinks($tmp)->entries;
+          	$tmp->entries = $files;
+          	$filtered = $com_model->filterResults($tmp, $folder);
+          	$files = $com_model->hideUnsharedLinks($filtered)->entries;
           }
-          
+
          return $files;
 	}
 	

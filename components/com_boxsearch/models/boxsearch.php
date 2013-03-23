@@ -69,14 +69,19 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		// loop through results to remove unwanted results
 		for ($i = 0; $i <= count($results->entries)+1; $i++)
 		{
-			// loop through path ids
-			foreach ($results->entries[$i]->path_collection->entries as $result)
+			// this if statement helps code to not break but might cause an issue with matching.
+			// remove if results get weird!
+			if (isset($results->entries[$i]->path_collection->entries))
 			{
-				// if one in the path matches our search, store the index so it's not removed
-				if ($result->id == $pattern)
+				// loop through path ids
+				foreach ($results->entries[$i]->path_collection->entries as $result)
 				{
-					$matches[] = $i;
-					break 1;
+					// if one in the path matches our search, store the index so it's not removed
+					if ($result->id == $pattern)
+					{
+						$matches[] = $i;
+						break 1;
+					}
 				}
 			}
 		}
