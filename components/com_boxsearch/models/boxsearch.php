@@ -216,7 +216,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
           $params = '{"shared_link": {"access": "open"}}';
      
           // authenticate the app
-          $createShareLink = $box_api->post($url,  $params, $header_details);
+          $createShareLink = $box_api->put($url,  $params, $header_details);
           
           return $createShareLink;
 	}

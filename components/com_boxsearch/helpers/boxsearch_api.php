@@ -134,7 +134,22 @@ class Rest_Client {
       * @param string $url
       * @param array $params A list of post-based params to pass
       */
-     public static function post($url, $params = array(), array $header = array()) {
+     public static function post($url,array $params = array(), array $header = array()) {
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+          curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+          curl_setopt($ch, CURLOPT_POST, true);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+          $information = curl_getinfo($ch);
+          
+          $data = curl_exec($ch);
+          curl_close($ch);
+          
+          return $data;
+     }
+     public static function put($url, $params = array(), array $header = array()) {
           $ch = curl_init();
           curl_setopt($ch, CURLOPT_URL, $url);
           curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
