@@ -18,7 +18,6 @@ class BoxsearchHelper {
 	
      public static function authenticateBox()
      {    
-     	echo 'authenticating';
           $auth_app =     new Rest_Client;
           $com_boxsearch_params   = JComponentHelper::getParams('com_boxsearch');
           

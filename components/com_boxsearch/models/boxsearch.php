@@ -155,8 +155,6 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		$data = json_decode(curl_exec($ch));
 		curl_close($ch);
 		
-		//print_r($data);
-		
 		if (isset($data->type) && $data->type=='error')
 		{
 			JFactory::getApplication()->enqueueMessage($data->message, 'error');
@@ -165,6 +163,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 	     {
                JFactory::getApplication()->enqueueMessage(JText::_('COM_BOXSEARCH_UPLOAD_SUCCESS'), 'success');
                $this->recordUploads($data->entries);
+               $this->createShareLink($data->entries[0]->id);
           }
 
 		return $data;
@@ -200,6 +199,26 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		{
 			// catch any database errors.
 		}
+	}
+	
+	public function createShareLink($file_id)
+	{
+		// box api
+		$box_api =     new Rest_Client;
+		// the url
+          $url = 'https://api.box.com/2.0/files/'.$file_id;
+          // get token
+          $token = $this->getToken();
+          // header
+          $header_details = array('Authorization: Bearer '.$token);
+          //  params
+          //$params = array();
+          $params = '{"shared_link": {"access": "open"}}';
+     
+          // authenticate the app
+          $createShareLink = $box_api->post($url,  $params, $header_details);
+          
+          return $createShareLink;
 	}
 
 
