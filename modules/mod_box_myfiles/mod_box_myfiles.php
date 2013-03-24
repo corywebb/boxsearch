@@ -18,4 +18,22 @@ JLoader::register('BoxsearchModuleHelper', __DIR__ . '/helpers/boxsearch.php');
 JLoader::register('Rest_Client', 'components/com_boxsearch/helpers/boxsearch_api.php');
 JLoader::register('BoxsearchModelBoxsearch', 'components/com_boxsearch/models/boxsearch.php');
 
+$input = JFactory::getApplication()->input;
+
+if ($input->get('delete'))
+{
+	$file_id = $input->getInt('file_id');
+	$etag = $input->getInt('etag');
+	$delete = BoxsearchModuleHelper::deleteFile($file_id, $etag);
+	if (isset($delete->type))
+	{   
+		JFactory::getApplication()->enqueueMessage($delete->status . " " .$delete->code, 'error');
+		
+	}
+	else
+	{
+		JFactory::getApplication()->enqueueMessage(JText::_('COM_BOXSEARCH_DELETE_SUCCESS'), 'success');
+	}
+}
+
 require JModuleHelper::getLayoutPath('mod_box_myfiles', $params->get('layout', 'default'));

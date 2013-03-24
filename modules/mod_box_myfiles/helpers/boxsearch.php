@@ -56,4 +56,40 @@ class BoxsearchModuleHelper
           $file = json_decode($box_api->get($url, $header));
           return $file;
 	}
+	public function deleteFile($file_id, $etag)
+	{
+		$box_api = new Rest_Client;
+		$url = "https://api.box.com/2.0/files/".$file_id;
+		$com_model = new BoxsearchModelBoxsearch;
+		$token = $com_model->getToken();
+		$header =  array('Authorization: Bearer '.$token,'If-Match: '.$etag);
+          // results
+          $delete = json_decode($box_api->delete($url, array(), $header));
+          
+          $db = JFactory::getDbo();
+          $query = $db->getQuery(true);
+		$conditions = array(
+	                   'file_id='.$file_id);
+		$query->delete($db->quoteName('#__boxsearch_uploads'));
+		$query->where($conditions);
+		$db->setQuery($query);
+		 
+		try
+		{
+			$result = $db->query(); // $db->execute(); for Joomla 3.0.
+		}
+		catch (Exception $e)
+		{
+		   
+		}
+          
+          if ($delete->type == 'error')
+          {
+          	return $delete;
+          }
+          else
+          {
+          	return true;
+          }
+	}
 }
