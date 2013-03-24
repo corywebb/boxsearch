@@ -11,8 +11,6 @@
 defined('_JEXEC') or die;
 
 global $_CB_framework;
-
-$user = JFactory::getUser();
 $user_id = $_CB_framework->displayedUser();
 $folderid = $params->get('folderid');
 
