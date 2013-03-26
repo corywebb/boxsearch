@@ -16,8 +16,9 @@
 ?>
 
 <div class="span9">
-     <p>Use the search box  below to search the box account.</p>
-     <form name="boxsearch" id="boxsearch" method="post">
+	<?php if ($menuParams->get('enable_search')): ?>
+		<p>Use the search box  below to search the box account.</p>
+		<form name="boxsearch" id="boxsearch" method="post">
           <fieldset>
                <label><?php echo JText::_('COM_BOXSEARCH_FORM_LABEL')?></label>
                <input type="text" name="query" size="20" class="input" placeholder="Search Query" />
@@ -31,6 +32,7 @@
           </fieldset>
           <input type="submit" class="btn" />
      </form>
+     <?php endif; ?>
      <?php if ($menuParams->get('enable_upload')): ?>
      	<?php echo $this->loadTemplate('upload'); ?>
      <?php endif; ?>
