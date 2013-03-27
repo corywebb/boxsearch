@@ -143,7 +143,39 @@ class Rest_Client {
           curl_setopt($ch, CURLOPT_POST, true);
           curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
           $information = curl_getinfo($ch);
-          print_r($information);
+          
+          $data = curl_exec($ch);
+          curl_close($ch);
+          
+          return $data;
+     }
+     public static function put($url, $params = array(), array $header = array()) {
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+          curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+          curl_setopt($ch, CURLOPT_POST, true);
+          curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+          $information = curl_getinfo($ch);
+        
+          $data = curl_exec($ch);
+          curl_close($ch);
+          
+          return $data;
+     }
+     public static function delete($url, $params = array(), array $header = array()) {
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+          curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+          curl_setopt($ch, CURLOPT_POST, true);
+          curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+          $information = curl_getinfo($ch);
+        
           $data = curl_exec($ch);
           curl_close($ch);
           
