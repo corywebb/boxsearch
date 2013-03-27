@@ -14,7 +14,7 @@ class BoxsearchViewRefresh extends JViewLegacy
      	$model = $this->getModel('refresh');
      	$refresh_token = $model->getRefreshToken();
 		$new_token = BoxsearchHelper::refreshAccess($refresh_token);
-	     $model->setSecret($new_token);
+	    $model->setSecret($new_token);
 		
 		
 

@@ -35,7 +35,7 @@ class BoxsearchModuleHelper
           	$filtered = $com_model->filterResults($tmp, $folder);
           	$files = $com_model->hideUnsharedLinks($filtered)->entries;
           }
-
+			$files = self::canDelete($files);
          return $files;
 	}
 	
@@ -91,5 +91,32 @@ class BoxsearchModuleHelper
           {
           	return true;
           }
+	}
+	
+	public function canDelete($files)
+	{
+		$userid = JFactory::getUser()->get('id');
+		foreach($files as $file)
+		{
+			$db = JFactory::getDbo();
+          	$query = $db->getQuery(true);
+			$query->select('user_id');
+			$query->select('file_id');
+			$query->from('#__boxsearch_uploads');
+			$query->where('file_id='.$file->id);
+			$db->setQuery($query);
+			// Load the results as a list of stdClass objects.
+			$results = $db->loadObject();
+
+			if ($file->id == $results->file_id && $results->user_id == $userid)
+			{
+				$file->canDelete = 1;
+			}
+			else {
+				$file->canDelete = 0;
+			}
+		}
+		
+		return $files;
 	}
 }
