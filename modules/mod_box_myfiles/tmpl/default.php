@@ -10,9 +10,9 @@
 // no direct access
 defined('_JEXEC') or die;
 
-global $_CB_framework;
-$user_id = $_CB_framework->displayedUser();
-//$user_id = JFactory::getUser()->get('id'); use Joomla's userid
+//global $_CB_framework;
+//$user_id = $_CB_framework->displayedUser();
+$user_id = JFactory::getUser()->get('id');
 $folderid = $params->get('folderid');
 
 $box_files = BoxsearchModuleHelper::getUserUploads($user_id,$folderid);
@@ -27,11 +27,13 @@ $box_files = BoxsearchModuleHelper::getUserUploads($user_id,$folderid);
                <p><?php echo $file->name?></p>
           <?php endif; ?>
           <?php echo JText::sprintf('MOD_BOX_MYFILES_CREATE_DATE', JHtml::_('date', $file->created_at, JText::_('DATE_FORMAT_LC3'))); ?>
-          <form id="delete_file">
-               <input type="hidden" name="file_id" value="<?php echo $file->id; ?>" />
-               <input type="hidden" name="etag" value="<?php echo $file->etag;?>" />
-               <input type="submit" class="btn-mini btn-primary" value="<?php echo JText::_('MOD_BOX_MYFILES_DELETE'); ?>" />
-               <input type="hidden" name="delete" value="1" />
-          </form>
+          <?php if ($file->canDelete): ?>
+	          <form id="delete_file">
+	               <input type="hidden" name="file_id" value="<?php echo $file->id; ?>" />
+	               <input type="hidden" name="etag" value="<?php echo $file->etag;?>" />
+	               <input type="submit" class="btn-mini btn-primary" value="<?php echo JText::_('MOD_BOX_MYFILES_DELETE'); ?>" />
+	               <input type="hidden" name="delete" value="1" />
+	          </form>
+	       <?php endif; ?>
      <?php endforeach; ?>
 </div>

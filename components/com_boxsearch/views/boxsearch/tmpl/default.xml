@@ -11,19 +11,30 @@
     		    label="Filter Folder ID"
     			description="Filter by folder id"
                 size="20"
-                    />
-                <field name="filter_label" type="field"
-                    label="Filter Label"
-                    description="The label of the folder id"
-                    size="20"
-                    />
-                    <field name="enable_upload" type="list"
-                        label="Enable Uploads"
-                        description="Enable upload feature"    
-                    >
-                    <option value="1">JYES</option>
-                    <option value="0">JNO</option>
-                </field>
-            </fieldset>
-        </fields>
+			/>
+			<field
+				name="filter_label"
+				type="field"
+				label="Filter Label"
+				description="The label of the folder id"
+				size="20"
+			/>
+			<field
+				name="enable_upload" type="list"
+                label="Enable Uploads"
+                description="Enable upload feature"    
+                >
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+			</field>
+			<field
+				name="enable_search" type="list"
+                label="Enable Search Box"
+                description="Enable Search Box"    
+                >
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+			</field>
+		</fieldset>
+	</fields>
 </metadata>
