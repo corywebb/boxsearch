@@ -32,7 +32,7 @@ class BoxsearchViewBoxsearch extends JViewLegacy
 			$menuParams->loadString($menu->params);
 			$filter_id    =  $menuParams->get('filter_id');
 			$filter_label =  $menuParams->get('filter_label');
-			$app->input->set('filter_id', $filter_id);
+			$app->input->set('filter_id', $app->input->get('subfolders'));
 			$app->input->set('filter_label', $filter_label);
 			$this->subfolders = $model->getSubfolders($filter_id);
 		}

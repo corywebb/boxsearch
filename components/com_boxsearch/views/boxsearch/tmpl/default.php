@@ -31,7 +31,7 @@
                          <?php echo $menuParams->get('filter_label'); ?>
                        </option>
                        <?php foreach($this->subfolders as $folder): ?>
-                           <option value="<?php echo $folder->id; ?>"><?php echo $folder->name; ?></option>
+                           <option value="<?php echo $folder->id; ?>"><?php echo "-". $folder->name; ?></option>
                        <?php endforeach; ?>
                    </select>
                <?php endif; ?>
