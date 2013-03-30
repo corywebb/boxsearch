@@ -10,9 +10,9 @@
 // no direct access
 defined('_JEXEC') or die;
 
-global $_CB_framework;
-$user_id = $_CB_framework->displayedUser();
-//$user_id = JFactory::getUser()->get('id');
+//global $_CB_framework;
+//$user_id = $_CB_framework->displayedUser();
+$user_id = JFactory::getUser()->get('id');
 $folderid = $params->get('folderid');
 
 $box_files = BoxsearchModuleHelper::getUserUploads($user_id,$folderid);

@@ -145,7 +145,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 
 		$post_vars = array();
 		$post_vars['filename'] = "@".$file;
-		$post_vars['parent_id'] = $app->input->get('filter_id');
+		$post_vars['parent_id'] = $app->input->get('subfolders');
 
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_vars);

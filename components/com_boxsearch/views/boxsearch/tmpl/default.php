@@ -20,10 +20,16 @@
 		<p>Use the box below to search for documents.</p>
 		<form name="boxsearch" id="boxsearch" method="post">
           <fieldset>
-               <label><?php echo JText::_('COM_BOXSEARCH_FORM_LABEL')?></label>
+               <label for="query"><?php echo JText::_('COM_BOXSEARCH_FORM_LABEL'); ?></label>
                <input type="text" name="query" size="20" class="input" placeholder="" />
                <?php if ($this->subfolders): ?>
+                   <label for="subfolders">
+                         <?php echo JText::_('COM_BOXSEARCH_FILTER_LABEL'); ?>
+                   </label>
                    <select name="subfolders">
+                       <option value="<?php echo $menuParams->get('filter_id'); ?>">
+                         <?php echo $menuParams->get('filter_label'); ?>
+                       </option>
                        <?php foreach($this->subfolders as $folder): ?>
                            <option value="<?php echo $folder->id; ?>"><?php echo $folder->name; ?></option>
                        <?php endforeach; ?>
