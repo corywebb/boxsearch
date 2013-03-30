@@ -32,11 +32,7 @@ if ($input->get('delete'))
 	}
 	else
 	{
-<<<<<<< HEAD
-		JFactory::getApplication()->enqueueMessage(JText::_('MOD_BOX_MYFILES_DELETE_SUCCESS'), 'success');
-=======
 		JFactory::getApplication()->enqueueMessage(JText::_('COM_BOXSEARCH_DELETE_SUCCESS'), 'success');
->>>>>>> b8d885acc1897908a203564dc995989d0b86de68
 	}
 }
 

@@ -10,15 +10,9 @@
 // no direct access
 defined('_JEXEC') or die;
 
-<<<<<<< HEAD
-//global $_CB_framework;
-//$user_id = $_CB_framework->displayedUser();
-$user_id = JFactory::getUser()->get('id');
-=======
 global $_CB_framework;
 $user_id = $_CB_framework->displayedUser();
 //$user_id = JFactory::getUser()->get('id');
->>>>>>> b8d885acc1897908a203564dc995989d0b86de68
 $folderid = $params->get('folderid');
 
 $box_files = BoxsearchModuleHelper::getUserUploads($user_id,$folderid);
@@ -28,18 +22,21 @@ $box_files = BoxsearchModuleHelper::getUserUploads($user_id,$folderid);
 <div><!-- Box files from folderid for Joomla user ~ foreach below -->
      <?php foreach ($box_files as $file) : ?>
           <?php if (isset($file->shared_link)): ?>
-               <p><a href="<?php echo $file->shared_link->url;?>" target="_blank"><?php echo $file->name?></a>
+               <div class="cv-inline"><a href="<?php echo $file->shared_link->url;?>" target="_blank"><?php echo $file->name?></a>
           <?php else: ?>
-               <p><?php echo $file->name?></p>
+               <div><?php echo $file->name?>
           <?php endif; ?>
-          <?php echo JText::sprintf('MOD_BOX_MYFILES_CREATE_DATE', JHtml::_('date', $file->created_at, JText::_('DATE_FORMAT_LC3'))); ?>
+          <?php echo JText::sprintf('MOD_BOX_MYFILES_CREATE_DATE', JHtml::_('date', $file->created_at, JText::_('DATE_FORMAT_LC3'))); ?></div>
+          
           <?php if ($file->canDelete): ?>
+	          <div>
 	          <form id="delete_file">
 	               <input type="hidden" name="file_id" value="<?php echo $file->id; ?>" />
 	               <input type="hidden" name="etag" value="<?php echo $file->etag;?>" />
 	               <input type="submit" class="btn-mini btn-primary" value="<?php echo JText::_('MOD_BOX_MYFILES_DELETE'); ?>" />
 	               <input type="hidden" name="delete" value="1" />
 	          </form>
+	          </div>
 	       <?php endif; ?>
-     <?php endforeach; ?>
+     <?php endforeach; ?></p>
 </div>

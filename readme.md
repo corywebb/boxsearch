@@ -1,1 +1,6 @@
-#Box.com Search Component for Joomla 3.0.x
+Box Joomla Component
+====================
+
+Joomla Box.com
+
+Using Box.com API 2

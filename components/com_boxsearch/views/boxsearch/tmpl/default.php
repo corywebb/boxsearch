@@ -17,11 +17,11 @@
 
 <div class="span9">
 	<?php if ($menuParams->get('enable_search')): ?>
-		<p>Use the search box  below to search the box account.</p>
+		<p>Use the box below to search for documents.</p>
 		<form name="boxsearch" id="boxsearch" method="post">
           <fieldset>
                <label><?php echo JText::_('COM_BOXSEARCH_FORM_LABEL')?></label>
-               <input type="text" name="query" size="20" class="input" placeholder="Search Query" />
+               <input type="text" name="query" size="20" class="input" placeholder="" />
                <?php if ($this->subfolders): ?>
                    <select name="subfolders">
                        <?php foreach($this->subfolders as $folder): ?>
@@ -30,7 +30,7 @@
                    </select>
                <?php endif; ?>
           </fieldset>
-          <input type="submit" class="btn" />
+          <input type="submit" class="btn btn-primary" value="Submit" />
      </form>
      <?php endif; ?>
      <?php if ($menuParams->get('enable_upload')): ?>

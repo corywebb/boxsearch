@@ -1,0 +1,15 @@
+/*
+ * This file contains the Joostrap custom css
+ * classes are required for box.com - Add the
+ * below classes to your Joostrap custom.css file.
+ * --------------------------------------------- */
+ 
+
+input.upload-choice {
+	line-height:20px;
+}
+.cv-inline {
+	float: left;
+	padding-right: 20px;
+	margin-top: 3px;
+}

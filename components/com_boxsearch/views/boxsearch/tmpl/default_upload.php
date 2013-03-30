@@ -10,9 +10,9 @@
 ?>
 
 <h5><?php echo JText::_('COM_BOXSEARCH_UPLOAD_LABEL');?></h5>
-<form action="<?php echo JRoute::_('index.php?option=com_boxsearch'); ?>" method="post" enctype="multipart/form-data">
+<form action="<?php echo JRoute::_('index.php?option=com_boxsearch'); ?>" method="post" enctype="multipart/form-data" >
 		<input type="hidden" name="action" value="upload_file">
 		
-		<label>Select File: </label><input type="file" name="file"> 
-		<button type="submit">Upload</button>
+		<label>Select File: </label><input type="file" name="file" class="upload-choice"> 
+		<button type="submit" class="btn btn-primary">Upload</button>
 </form>
