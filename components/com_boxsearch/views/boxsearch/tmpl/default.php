@@ -109,3 +109,7 @@
 <?php endforeach; ?>
 <?php endif; ?>
 <div class="clearfix"></div>
+<hr />
+<form name="pagination" id="pagination">
+     <input type="submit" id="getResults" value="Submit Form" class="button" />
+</form>

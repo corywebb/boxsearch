@@ -16,6 +16,9 @@ JLoader::register('BoxsearchHelper', __DIR__ . '/helpers/boxsearch.php');
 
 $doc = JFactory::getDocument();
 $doc->addStyleSheet('media/com_boxsearch/css/com_boxsearch.css');
+$doc->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
+$doc->addScript('media/com_boxsearch/js/com_boxsearch.js');
+
 
 $controller = JControllerLegacy::getInstance('Boxsearch');	
 $controller->execute(JFactory::getApplication()->input->get('task'));
