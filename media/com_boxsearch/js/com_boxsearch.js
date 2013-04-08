@@ -1,28 +1,25 @@
 jQuery(document).ready(function(){
+	var offset = 0;
  jQuery("#pagination").submit(function () {
-    //var usr = jQuery("#username").val();
-    /*
-    if (usr.length >= 2) {
-     jQuery("#status").html('<img src="loader.gif" align="absmiddle">&nbsp;Checking availability...');
-     jQuery.ajax({
+	 event.preventDefault();
+	 
+     offset = offset+30;
+     alert(offset);
+     var request = jQuery.ajax({
          type: "POST",
-         url: "index.php?option=com_test&view=check_user",
-         data: "username=" + usr,
-         success: function (msg) {
-         jQuery("#status").ajaxComplete(function (event, request, settings) {
-         if (msg == 'OK') {
-            jQuery("#username").removeClass('object_error'); // if necessary
-                jQuery("#username").addClass("object_ok");
-         }
-         else {
-               jQuery("#username").removeClass('object_ok'); // if necessary
-               jQuery("#username").addClass("object_error");
-               jQuery(this).html(msg);
-         }
+         url: "index.php?option=com_boxsearch&view=ajax&format=raw&offset="+offset,
+         data: "",
+         dataType: 'json',
+         success: function(result) {
+        	 $('#content1').html(result[0]);
+         },
        });
-      }
-    });
-  }*/
-    alert('working');   
+      
+     // callback handler that will be called on success
+     request.done(function (response, textStatus, jqXHR){
+         // log a message to the console
+         console.log("Hooray, it worked!");
+     }); 
+    //return false;
 });
 });

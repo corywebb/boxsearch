@@ -113,3 +113,4 @@
 <form name="pagination" id="pagination">
      <input type="submit" id="getResults" value="Submit Form" class="button" />
 </form>
+<div id="content1"></div>
