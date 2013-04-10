@@ -21,12 +21,12 @@
 		<form name="boxsearch" id="boxsearch" method="post">
           <fieldset>
                <label for="query"><?php echo JText::_('COM_BOXSEARCH_FORM_LABEL'); ?></label>
-               <input type="text" name="query" size="20" class="input" placeholder="" />
+               <input type="text" name="query" size="20" class="input" placeholder="" id="query" />
                <?php if ($this->subfolders): ?>
                    <label for="subfolders">
                          <?php echo JText::_('COM_BOXSEARCH_FILTER_LABEL'); ?>
                    </label>
-                   <select name="subfolders">
+                   <select class="filter-subfolders" name="subfolders">
                        <option value="<?php echo $menuParams->get('filter_id'); ?>">
                          <?php echo $menuParams->get('filter_label'); ?>
                        </option>
@@ -109,8 +109,9 @@
 <?php endforeach; ?>
 <?php endif; ?>
 <div class="clearfix"></div>
-<hr />
+<div class="box-results"></div>
 <form name="pagination" id="pagination">
-     <input type="submit" id="getResults" value="Submit Form" class="button" />
+     <input type="submit" id="getResults" value="Get More Results" class="button" />
+     <div class="boxsearch-loading"></div>
 </form>
-<div id="content1"></div>
+

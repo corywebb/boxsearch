@@ -15,7 +15,7 @@ class BoxsearchModelAjax extends BoxsearchModelBoxsearch
           $box_api = new Rest_Client;
           // search url with query
           $url = "https://api.box.com/2.0/search?query=".$query."&offset=".$offset;
-          echo $url;
+         
           // get token
           $token = $this->getToken();
 
@@ -28,17 +28,19 @@ class BoxsearchModelAjax extends BoxsearchModelBoxsearch
           {
                //filter results
                $pattern = $app->input->get('filter_id');
-               $results = $this->filterResults($results, $pattern);
+               $results = parent::filterResults($results, $pattern);
           }
+         
                
           if ($params->get('hide_unshared'))
           {
                //echo "hiding unshared";
-               $results = $this->hideUnsharedLinks($results);
+               $results = parent::hideUnsharedLinks($results);
           }
-        
-          $results = $this->replaceCreatedBy($results);
 
-          return json_encode($results);
+        
+          $results = parent::replaceCreatedBy($results);
+
+          return $results;
 	}
 }
