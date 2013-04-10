@@ -34,7 +34,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 			$results = $this->hideUnsharedLinks($results);
 		}
         
-        $results = $this->replaceCreatedBy($results);
+          $results = $this->replaceCreatedBy($results);
 
 
 		return $results;
@@ -67,11 +67,25 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 
 		//keep matches
 		$matches = array();
-
+          
+		$count = 0;
+          foreach($results->entries as $entry)
+          {
+               foreach ($entry->path_collection->entries as $result)
+               {
+                    // if one in the path matches our search, store the index so it's not removed
+                    if ($result->id == $pattern)
+                    {
+                         $matches[] = $count;
+                         break 1;
+                     }
+               }
+               $count++;
+          }
+		/*
 		// loop through results to remove unwanted results
 		for ($i = 0; $i <= count($results->entries)+1; $i++)
 		{
-
 				// loop through path ids
 				foreach ($results->entries[$i]->path_collection->entries as $result)
 				{
@@ -83,7 +97,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 					}
 				}
 
-		}
+		}*/
 
 		// counter
 		$x=0;
@@ -110,17 +124,16 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 			
 		// store the object here so we can remove things.
 		$results->entries = array_values($results->entries);
+		
 		$resultsStore = $results;
-
-		// keep match indexes
-		$matches = array();
-
-		for ($i = 0; $i <= count($results->entries) +1; $i++)
+		$count = 0;
+		foreach($results->entries as $entry)
 		{
-			if ($results->entries[$i]->shared_link == null || !($results->entries[$i]->shared_link->url))
-			{
-				unset($resultsStore->entries[$i]);
-			}
+		     if ($entry->shared_link == null || !($entry->shared_link->url))
+               {
+                    unset($resultsStore->entries[$count]);
+               }
+               $count++;
 		}
 			
 		return $resultsStore;
