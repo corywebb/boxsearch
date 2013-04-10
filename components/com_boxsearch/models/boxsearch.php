@@ -129,11 +129,18 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		$count = 0;
 		foreach($results->entries as $entry)
 		{
+<<<<<<< HEAD
 		     if ($entry->shared_link == null || !($entry->shared_link->url))
                {
                     unset($resultsStore->entries[$count]);
                }
                $count++;
+=======
+			if ($results->entries[$i]->shared_link == null || !($results->entries[$i]->shared_link->url) || !isset($results->entries[$i]->shared_link->download_url) )
+			{
+				unset($resultsStore->entries[$i]);
+			}
+>>>>>>> c58435948a791bd5c38f44f657d9d3c015625b55
 		}
 			
 		return $resultsStore;
@@ -158,7 +165,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 
 		$post_vars = array();
 		$post_vars['filename'] = "@".$file;
-		$post_vars['parent_id'] = $app->input->get('subfolders');
+		$post_vars['parent_id'] = $app->input->get('filter_id');
 
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_vars);
