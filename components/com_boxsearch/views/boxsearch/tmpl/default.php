@@ -34,7 +34,9 @@
                            <option value="<?php echo $folder->id; ?>"><?php echo "-". $folder->name; ?></option>
                        <?php endforeach; ?>
                    </select>
-               <?php endif; ?>
+               <?php else: ?>
+                   <input type="hidden" name="subfolders" value="<?php echo $menuParams->get('filter_id'); ?>">
+               <?php endif;?>
           </fieldset>
           <input type="submit" class="btn btn-primary" value="Submit" />
      </form>
