@@ -10,7 +10,6 @@
  $menu = $app->getMenu()->getActive();
  $menuParams   = new JRegistry;
  $menuParams->loadString($menu->params);
-
 ?>
 
 <h5><?php echo JText::_('COM_BOXSEARCH_UPLOAD_LABEL');?></h5>
@@ -33,6 +32,8 @@
                            <option value="<?php echo $folder->id; ?>"><?php echo "-" . $folder->name; ?></option>
                        <?php endforeach; ?>
                    </select>
-               <?php endif; ?>
+               <?php else: ?>
+                   <input name="subfolders" type="hidden" value="<?php echo $menuParams->get('filter_id'); ?>" />
+               <?php endif;?>
 		<button type="submit" class="btn btn-primary">Upload</button>
 </form>
