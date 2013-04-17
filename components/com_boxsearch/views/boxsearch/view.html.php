@@ -45,11 +45,11 @@ class BoxsearchViewBoxsearch extends JViewLegacy
 			$JFile = new JInputFiles;
 			$file = $JFile->get('file');
 			$user = JFactory::getUser();
-			$user_id = $user->id;
+			$username = $user->username;
 			$unique_id = uniqid();
 			$ext = JFile::getExt($file['name']);
 			$name = JFile::stripExt($file['name']);
-			$path = "tmp/" . JFile::makeSafe($name . "_" . $user_id . "_" . $unique_id . ".".$ext);
+			$path = "tmp/" . JFile::makeSafe($name . "_" . $username . "_" . $unique_id . ".".$ext);
 			JFile::copy($file['tmp_name'], $path);
 			$upload = $model->uploadFile($path);
 			if (!empty($upload->type) && $upload->type == 'error') {
