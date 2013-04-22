@@ -102,7 +102,7 @@ class BoxsearchHelper {
      		default:
      			$file_icon = 'default_icon.png';
      	}
-          return $iconpath.$file_icon;
+          return JURI::root().$iconpath.$file_icon;
      }
      
      /*
@@ -123,7 +123,7 @@ class BoxsearchHelper {
      		   $filetype = 'document';
      		   break;
      		case 'jpeg':
-     		case 'jpeg':
+     		case 'jpg':
      		case 'gif':
      		case 'png':
      		case 'bmp':

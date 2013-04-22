@@ -34,7 +34,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 			$results = $this->hideUnsharedLinks($results);
 		}
         
-          $results = $this->replaceCreatedBy($results);
+        $results = $this->replaceCreatedBy($results);
 
 
 		return $results;
@@ -67,25 +67,11 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 
 		//keep matches
 		$matches = array();
-          
-		$count = 0;
-          foreach($results->entries as $entry)
-          {
-               foreach ($entry->path_collection->entries as $result)
-               {
-                    // if one in the path matches our search, store the index so it's not removed
-                    if ($result->id == $pattern)
-                    {
-                         $matches[] = $count;
-                         break 1;
-                     }
-               }
-               $count++;
-          }
-		/*
+
 		// loop through results to remove unwanted results
 		for ($i = 0; $i <= count($results->entries)+1; $i++)
 		{
+
 				// loop through path ids
 				foreach ($results->entries[$i]->path_collection->entries as $result)
 				{
@@ -97,7 +83,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 					}
 				}
 
-		}*/
+		}
 
 		// counter
 		$x=0;
@@ -124,23 +110,21 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 			
 		// store the object here so we can remove things.
 		$results->entries = array_values($results->entries);
-		
 		$resultsStore = $results;
-		$count = 0;
-		foreach($results->entries as $entry)
+
+		// keep match indexes
+		$matches = array();
+
+		for ($i = 0; $i <= count($results->entries) +1; $i++)
 		{
-<<<<<<< HEAD
-		     if ($entry->shared_link == null || !($entry->shared_link->url))
-               {
-                    unset($resultsStore->entries[$count]);
-               }
-               $count++;
-=======
-			if ($results->entries[$i]->shared_link == null || !($results->entries[$i]->shared_link->url) || !isset($results->entries[$i]->shared_link->download_url) )
+			if ($results->entries[$i]->shared_link == null || !($results->entries[$i]->shared_link->url))
 			{
 				unset($resultsStore->entries[$i]);
 			}
->>>>>>> c58435948a791bd5c38f44f657d9d3c015625b55
+		     else
+               {
+                    $resultsStore->entries[$i]->icon = BoxsearchHelper::getFileIcon($results->entries[$i]->shared_link->download_url);
+               }
 		}
 			
 		return $resultsStore;
@@ -165,7 +149,8 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 
 		$post_vars = array();
 		$post_vars['filename'] = "@".$file;
-		$post_vars['parent_id'] = $app->input->get('filter_id');
+		$post_vars['parent_id'] = $app->input->get('subfolders');
+        
 
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_vars);
