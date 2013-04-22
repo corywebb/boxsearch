@@ -34,8 +34,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 			$results = $this->hideUnsharedLinks($results);
 		}
         
-        $results = $this->replaceCreatedBy($results);
-
+          $results = $this->replaceCreatedBy($results);
 
 		return $results;
 	}
@@ -256,7 +255,18 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 			}
 
 		}
-		return $subfolders;
+		
+		// if there's subfolders return them. If we didn't get any return false
+		if (count($subfolders))
+		{
+		     return $subfolders;
+		}
+		else
+		{
+		     return false;
+		}
+		
+		
 	}
     
     public function replaceCreatedBy($results)

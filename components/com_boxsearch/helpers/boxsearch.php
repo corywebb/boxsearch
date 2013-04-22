@@ -172,5 +172,32 @@ class BoxsearchHelper {
          $bytes /= (1 << (10 * $pow)); 
 
           return round($bytes, $precision) . ' ' . $units[$pow]; 
-     } 
+     }
+
+     /*
+     ** recursive function which builds child / parent option list of 
+     ** select list options 
+     */
+     
+     public function getSubfoldersList($parent_id, $class = '', $depth = 1)
+     {
+          $model = new BoxsearchModelBoxsearch();
+          $subfolders = $model->getSubFolders($parent_id);
+          $opts = '';
+         // print_r($subfolders);
+         $whitespace = str_repeat('&nbsp;', $depth * 2);
+          foreach($subfolders as $folder) {
+               if ($model->getSubFolders($folder->id))
+               {
+                   $opts .= '<option value="' . $folder->id . '"class="parent ' . $class . '"> '. $whitespace . $folder->name . '</option>';
+                   $opts .= self::getSubfoldersList($folder->id, 'child', $depth+1);
+               }
+               else
+               {
+                    $opts .= '<option value="' . $folder->id . '" class="'.$class.'"> ' . $whitespace. $folder->name . '</option>';
+               }
+          }
+          
+          return $opts;
+     }
 }

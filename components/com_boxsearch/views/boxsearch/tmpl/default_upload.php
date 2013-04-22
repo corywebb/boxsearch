@@ -29,10 +29,9 @@
                        <option value="<?php echo $menuParams->get('filter_id'); ?>">
                          <?php echo $menuParams->get('filter_label'); ?>
                        </option>
-                       <?php foreach($this->subfolders as $folder): ?>
-                           <option value="<?php echo $folder->id; ?>"><?php echo "-" . $folder->name; ?></option>
-                       <?php endforeach; ?>
+                       <?php echo BoxsearchHelper::getSubfoldersList($menuParams->get('filter_id')); ?>
                    </select>
+                   
                <?php endif; ?>
 		<button type="submit" class="btn btn-primary">Upload</button>
 </form>

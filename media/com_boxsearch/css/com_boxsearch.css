@@ -26,3 +26,7 @@ ul.boxsearch li + li:before{
 	height: 20px;
 	float: left;	
 }
+
+.child {
+     padding-left: 10px;
+}
