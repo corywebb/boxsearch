@@ -32,11 +32,9 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		{
 			//echo "hiding unshared";
 			$results = $this->hideUnsharedLinks($results);
-			
-			
 		}
-
-		$results = $this->replaceCreatedBy($results);
+        
+        $results = $this->replaceCreatedBy($results);
 
 
 		return $results;
@@ -74,16 +72,16 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		for ($i = 0; $i <= count($results->entries)+1; $i++)
 		{
 
-			// loop through path ids
-			foreach ($results->entries[$i]->path_collection->entries as $result)
-			{
-				// if one in the path matches our search, store the index so it's not removed
-				if ($result->id == $pattern)
+				// loop through path ids
+				foreach ($results->entries[$i]->path_collection->entries as $result)
 				{
-					$matches[] = $i;
-					break 1;
+					// if one in the path matches our search, store the index so it's not removed
+					if ($result->id == $pattern)
+					{
+						$matches[] = $i;
+						break 1;
+					}
 				}
-			}
 
 		}
 
@@ -119,14 +117,14 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 
 		for ($i = 0; $i <= count($results->entries) +1; $i++)
 		{
-			if ($results->entries[$i]->shared_link == null || !($results->entries[$i]->shared_link->url) || !isset($results->entries[$i]->shared_link->download_url) )
+			if ($results->entries[$i]->shared_link == null || !($results->entries[$i]->shared_link->url))
 			{
 				unset($resultsStore->entries[$i]);
 			}
-			else
-			{
-				$resultsStore->entries[$i]->icon = BoxsearchHelper::getFileIcon($results->entries[$i]->shared_link->download_url);
-			}
+		     else
+               {
+                    $resultsStore->entries[$i]->icon = BoxsearchHelper::getFileIcon($results->entries[$i]->shared_link->download_url);
+               }
 		}
 			
 		return $resultsStore;
@@ -151,7 +149,8 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 
 		$post_vars = array();
 		$post_vars['filename'] = "@".$file;
-		$post_vars['parent_id'] = $app->input->get('filter_id');
+		$post_vars['parent_id'] = $app->input->get('subfolders');
+        
 
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_vars);
@@ -159,17 +158,17 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$data = json_decode(curl_exec($ch));
 		curl_close($ch);
-
+		
 		if (isset($data->type) && $data->type=='error')
 		{
 			JFactory::getApplication()->enqueueMessage($data->message, 'error');
 		}
-		elseif (isset($data->entries))
-		{
-			JFactory::getApplication()->enqueueMessage(JText::_('COM_BOXSEARCH_UPLOAD_SUCCESS'), 'success');
-			$this->recordUploads($data->entries);
-			$this->createShareLink($data->entries[0]->id);
-		}
+	     elseif (isset($data->entries))
+	     {
+               JFactory::getApplication()->enqueueMessage(JText::_('COM_BOXSEARCH_UPLOAD_SUCCESS'), 'success');
+               $this->recordUploads($data->entries);
+               $this->createShareLink($data->entries[0]->id);
+          }
 
 		return $data;
 	}
@@ -183,20 +182,20 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 
 		// Insert columns.
 		$columns = array('user_id', 'file_id');
-
+		
 		// Insert values.
 		$values = array($db->quote($user_id), $db->quote($data[0]->id));
-
+		
 		// Prepare the insert query.
 		$query
 		->insert($db->quoteName('#__boxsearch_uploads'))
 		->columns($db->quoteName($columns))
 		->values(implode(',',$values));
-
+		
 		// Reset the query using our newly populated query object.
-		$db->setQuery($query);
+          $db->setQuery($query);
 		try
-		{
+		{  
 			$result = $db->query();
 			// Execute the query in Joomla 2.5.
 		}
@@ -205,25 +204,25 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 			// catch any database errors.
 		}
 	}
-
+	
 	public function createShareLink($file_id)
 	{
 		// box api
 		$box_api =     new Rest_Client;
 		// the url
-		$url = 'https://api.box.com/2.0/files/'.$file_id;
-		// get token
-		$token = $this->getToken();
-		// header
-		$header_details = array('Authorization: Bearer '.$token);
-		//  params
-		//$params = array();
-		$params = '{"shared_link": {"access": "open"}}';
-			
-		// authenticate the app
-		$createShareLink = $box_api->put($url,  $params, $header_details);
-
-		return $createShareLink;
+          $url = 'https://api.box.com/2.0/files/'.$file_id;
+          // get token
+          $token = $this->getToken();
+          // header
+          $header_details = array('Authorization: Bearer '.$token);
+          //  params
+          //$params = array();
+          $params = '{"shared_link": {"access": "open"}}';
+     
+          // authenticate the app
+          $createShareLink = $box_api->put($url,  $params, $header_details);
+          
+          return $createShareLink;
 	}
 
 
@@ -259,29 +258,29 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		}
 		return $subfolders;
 	}
+    
+    public function replaceCreatedBy($results)
+    {
+       $db = JFactory::getDbo();
+    	foreach ($results->entries as $result)
+    	{
+    		
+         	$query = $db->getQuery(true);
+		$query->select('user_id');
+		$query->select('file_id');
+		$query->from('#__boxsearch_uploads');
+		$query->where('file_id='.$result->id);
+		$db->setQuery($query);
+		// Load the results as a list of stdClass objects.
+		$db_file = $db->loadObject();
 
-	public function replaceCreatedBy($results)
-	{
-		$db = JFactory::getDbo();
-		foreach ($results->entries as $result)
-		{
-
-			$query = $db->getQuery(true);
-			$query->select('user_id');
-			$query->select('file_id');
-			$query->from('#__boxsearch_uploads');
-			$query->where('file_id='.$result->id);
-			$db->setQuery($query);
-			// Load the results as a list of stdClass objects.
-			$db_file = $db->loadObject();
-
-			if ($db_file && $result->id == $db_file->file_id)
-			{
-				$createby = JFactory::getUser($db_file->user_id);
-				// change the value of the name to a recorded alias
-				$result->created_by->name = $createby->get('name');
-			}
+		if ($db_file && $result->id == $db_file->file_id)
+		{	
+               $createby = JFactory::getUser($db_file->user_id);
+               // change the value of the name to a recorded alias
+			$result->created_by->name = $createby->get('name');
 		}
-		return $results;
-	}
+    	} 
+    	return $results;
+    }
 }

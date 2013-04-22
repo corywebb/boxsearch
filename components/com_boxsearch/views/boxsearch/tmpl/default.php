@@ -36,7 +36,10 @@
                    </select>
                <?php endif; ?>
           </fieldset>
-          <input type="submit" class="btn btn-primary" value="Submit" />
+     </form>
+     <form name="pagination" id="pagination">
+     <input type="submit" id="getResults" value="Get More Results" class="button" />
+          <div class="boxsearch-loading"></div>
      </form>
      <?php endif; ?>
      <?php if ($menuParams->get('enable_upload')): ?>
@@ -110,8 +113,5 @@
 <?php endif; ?>
 <div class="clearfix"></div>
 <div class="box-results"></div>
-<form name="pagination" id="pagination">
-     <input type="submit" id="getResults" value="Get More Results" class="button" />
-     <div class="boxsearch-loading"></div>
-</form>
+
 
