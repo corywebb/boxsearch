@@ -19,7 +19,7 @@ jQuery(document).ready(function(){
 			 //alert (entries);
 			 $.each(entries, function(key, entry) {
 			    items.push('<div class="boxsearch-item ' + key + '">');
-				    items.push('<div class="span1">icon</div>');
+				    items.push('<div class="span1"><img src="' + entry.icon + '" /></div>');
 				    items.push('<div class="span11">');
 				    	items.push('<h4>');
 				    		if (typeof entry.shared_link == undefined || entry.shared_link == null )
