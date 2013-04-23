@@ -179,18 +179,22 @@ class BoxsearchHelper {
      ** select list options 
      */
      
-     public function getSubfoldersList($parent_id, $class = '', $depth = 1)
+     public function getSubfoldersList($parent_id, $class = '', $depth = 1, $limit_children = 0)
      {
           $model = new BoxsearchModelBoxsearch();
           $subfolders = $model->getSubFolders($parent_id);
           $opts = '';
-         // print_r($subfolders);
+          echo $limit_children;
          $whitespace = str_repeat('&nbsp;', $depth * 2);
           foreach($subfolders as $folder) {
+              if ($limit_children == 1)
+              {
+                break 1;
+              }
                if ($model->getSubFolders($folder->id))
                {
                    $opts .= '<option value="' . $folder->id . '"class="parent ' . $class . '"> '. $whitespace . $folder->name . '</option>';
-                   $opts .= self::getSubfoldersList($folder->id, 'child', $depth+1);
+                   $opts .= self::getSubfoldersList($folder->id, 'child', $depth+1, $limit_children+1);
                }
                else
                {
