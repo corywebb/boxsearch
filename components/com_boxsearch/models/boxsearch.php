@@ -103,6 +103,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 
 	public function hideUnsharedLinks($results)
 	{
+		JLoader::register('BoxsearchHelper', 'components/com_boxsearch/helpers/boxsearch.php');
 		$params = JComponentHelper::getParams('com_boxsearch');
 		$app = JFactory::getApplication();
 		$pattern = $app->input->get('filter_id');

@@ -31,7 +31,8 @@
                        </option>
                        <?php echo BoxsearchHelper::getSubfoldersList($menuParams->get('filter_id')); ?>
                    </select>
-                   
+               <?php else: ?>
+                <input type="hidden" name="subfolders" value="<?php echo $menuParams->get('filter_id'); ?>" />
                <?php endif; ?>
 		<button type="submit" class="btn btn-primary">Upload</button>
 </form>
