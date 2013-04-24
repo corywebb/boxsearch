@@ -34,8 +34,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 			$results = $this->hideUnsharedLinks($results);
 		}
         
-        $results = $this->replaceCreatedBy($results);
-
+          $results = $this->replaceCreatedBy($results);
 
 		return $results;
 	}
@@ -104,6 +103,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 
 	public function hideUnsharedLinks($results)
 	{
+		JLoader::register('BoxsearchHelper', 'components/com_boxsearch/helpers/boxsearch.php');
 		$params = JComponentHelper::getParams('com_boxsearch');
 		$app = JFactory::getApplication();
 		$pattern = $app->input->get('filter_id');
@@ -121,6 +121,10 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 			{
 				unset($resultsStore->entries[$i]);
 			}
+		     else
+               {
+                    $resultsStore->entries[$i]->icon = BoxsearchHelper::getFileIcon($results->entries[$i]->shared_link->download_url);
+               }
 		}
 			
 		return $resultsStore;
@@ -146,6 +150,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		$post_vars = array();
 		$post_vars['filename'] = "@".$file;
 		$post_vars['parent_id'] = $app->input->get('subfolders');
+        
 
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_vars);
@@ -231,6 +236,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		$box_api = new Rest_Client;
 		// search url with query
 		$url = "https://api.box.com/2.0/folders/".$folder_id;
+
 		// get token
 		$token = $this->getToken();
 
@@ -240,6 +246,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		$folders = json_decode($box_api->get($url, $header));
 
 		$subfolders = array();
+
 
 		foreach($folders->item_collection->entries as $item)
 		{
@@ -251,7 +258,19 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 			}
 
 		}
-		return $subfolders;
+
+
+		// if there's subfolders return them. If we didn't get any return false
+		if (count($subfolders))
+		{
+		     return $subfolders;
+		}
+		else
+		{
+		     return false;
+		}
+		
+		
 	}
     
     public function replaceCreatedBy($results)

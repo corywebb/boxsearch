@@ -18,3 +18,15 @@ ul.boxsearch li + li:before{
 .boxsearch-item h4 {
      margin: 0px;
 }
+
+.boxsearch-loading {
+     background: url('../images/ajax-loader.gif') no-repeat;
+	display: block;
+	width: 19px;
+	height: 20px;
+	float: left;	
+}
+
+.child {
+     padding-left: 10px;
+}

@@ -9,10 +9,7 @@
 
 class BoxsearchController extends JControllerLegacy
 {
-    
-
-    
-public function __construct($config = array())
+     public function __construct($config = array())
      {
      	JLoader::register('BoxsearchHelper', __DIR__ . '/helpers/boxsearch.php');
           parent::__construct($config);
@@ -21,6 +18,7 @@ public function __construct($config = array())
           // register tasks
           $this->registerTask('authenticate', 'authenticate');
           $this->registerTask('setClientSecret', 'setClientSecret');
+          $this->registerTask('ajax', 'ajax');
           
           $model = $this->getModel('Clientsecret');
           $refresh = $model->refresh();
@@ -35,6 +33,10 @@ public function __construct($config = array())
           if ($app->input->get('state')=='authenticated' && $app->input->get('code'))
           {
           	JFactory::getApplication()->input->set('task', 'setClientSecret');
+          }
+          if ($app->input->get('task')=='ajax')
+          {
+          	JFactory::getApplication()->input->set('task', 'ajax');
           }
           
      }

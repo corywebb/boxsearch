@@ -35,6 +35,14 @@
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 			</field>
+			<field
+				name="enable_search_filter" type="list"
+                label="Enable Search Filter"
+                description="Enable Search Filter"    
+                >
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+			</field>
 		</fieldset>
 	</fields>
 </metadata>

@@ -36,6 +36,10 @@ class BoxsearchModuleHelper
           	$files = $com_model->hideUnsharedLinks($filtered)->entries;
           }
 			$files = self::canDelete($files);
+
+			// replace our filenames to look cleaner. remove username and uniqueid
+			$files = self::cleanNames($files);
+
          return $files;
 	}
 	
@@ -54,6 +58,7 @@ class BoxsearchModuleHelper
           $header =  array('Authorization: Bearer '.$token);
           // results
           $file = json_decode($box_api->get($url, $header));
+
           return $file;
 	}
 	public function deleteFile($file_id, $etag)
@@ -117,6 +122,42 @@ class BoxsearchModuleHelper
 			}
 		}
 		
+		return $files;
+	}
+	public function cleanNames($files)
+	{	
+		// loop through each file
+		foreach ($files as $file)
+		{
+			// get our db info for each file
+			$db = JFactory::getDbo();
+          	$query = $db->getQuery(true);
+			$query->select('user_id');
+			$query->select('file_id');
+			$query->from('#__boxsearch_uploads');
+			$query->where('file_id='.$file->id);
+			$db->setQuery($query);
+			$results = $db->loadObject();
+
+			// get the userid for each file
+			$userid = $results->user_id;
+			
+			// change userid for username
+			$username = JFactory::getUser($userid)->username;
+
+			// get the ext to rebuild
+			$ext = pathinfo($file->name, PATHINFO_EXTENSION);
+
+			// strip out username / id & ext
+			if (strpos($file->name, "_".$username) !== false)
+			{
+				$name = substr($file->name, 0, strpos($file->name, "_".$username));
+				// rebuild the filename and ext without the userid and uniqueid in it
+				$file->name = $name.".".$ext;
+			}
+		}
+		
+		// return our rebuilt files
 		return $files;
 	}
 }
