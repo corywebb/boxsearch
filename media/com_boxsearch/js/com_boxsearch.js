@@ -1,18 +1,49 @@
 jQuery(document).ready(function(){
+	$('#clear').hide();
+	$('#getMoreResults').hide();
 	var offset = 0;
 	$(".boxsearch-loading").hide();
 	jQuery("#pagination").submit(function () {
 		event.preventDefault();
+		clear();
+		search(offset);
+	}); // end event
+	jQuery("#clear").click(function () {
+			clear();
+	});
+	jQuery('#getMoreResults').click(function () {
+			offset = offset+30;
+			search(offset);
+	});
+	function clear()
+	{
+		offset = 0;
+		$('div.box-results').html('');
+		$('#getResults').attr('value','Get Results');
+		$('#getMoreResults').hide();
+	}
+	function search(offset)
+	{
 		$(".boxsearch-loading").show();
+		$('#getResults').prop('disabled', true); //TO DISABLED
 		var query = $('#query').val();
 		//alert (query);
 		//alert(offset);
-		var filter = $('select.filter-subfolders option:selected').val();
+		if ($('select.filter-subfolders option:selected').val())
+		{
+			var filter = $('select.filter-subfolders option:selected').val();
+		}
+		else
+		{
+			var filter = $('input.filter-subfolders').val();
+		}
+		
 		//alert(filter);
 		var url = 'index.php?option=com_boxsearch&view=ajax&format=raw&offset='+offset+'&query='+query+'&filter='+filter;
 		offset = offset+30;
 		//alert(url);
 		$.getJSON(url, function(data) {
+			
 			 $(".boxsearch-loading").show();
 			 var items = [];
 			 if (data.total_count == 0 || data.entries.length < 1)
@@ -62,7 +93,10 @@ jQuery(document).ready(function(){
 			    'class': 'my-new-list',
 			    html: items.join('')
 			  }).appendTo('div.box-results');
+			  $('#clear').show();
 			  $(".boxsearch-loading").hide();
+			  $('#getMoreResults').show();
+			  $('#getResults').prop('disabled', false); //TO ENABLE
 		}); // end json 
-	}); // end event
+	}
 }); // end dom

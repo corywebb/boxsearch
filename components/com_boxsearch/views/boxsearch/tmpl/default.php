@@ -15,31 +15,28 @@
  $params = JComponentHelper::getParams('com_boxsearch');
 ?>
 
-<div class="span9">
+<div class="span11">
 	<?php if ($menuParams->get('enable_search')): ?>
 		<p>Use the box below to search for documents.</p>
-		<form name="boxsearch" id="boxsearch" method="post">
-          <fieldset>
-               <label for="query"><?php echo JText::_('COM_BOXSEARCH_FORM_LABEL'); ?></label>
-               <input type="text" name="query" size="20" class="input" placeholder="" id="query" />
-               <?php if ($this->subfolders): ?>
-                   <label for="subfolders">
-                         <?php echo JText::_('COM_BOXSEARCH_FILTER_LABEL'); ?>
-                   </label>
-                   <select class="filter-subfolders" name="subfolders">
-                       <option value="<?php echo $menuParams->get('filter_id'); ?>">
-                         <?php echo $menuParams->get('filter_label'); ?>
-                       </option>
-                       <?php echo BoxsearchHelper::getSubfoldersList($menuParams->get('filter_id')); ?>
-                   </select>
-               <?php else: ?>
-                <input type="hidden" name="subfolders" value="<?php echo $menuParams->get('filter_id'); ?>" />
-               <?php endif; ?>
-          </fieldset>
-     </form>
      <form name="pagination" id="pagination">
-     <input type="submit" id="getResults" value="Get More Results" class="button" />
-          <div class="boxsearch-loading"></div>
+        <fieldset>
+          <label for="query"><?php echo JText::_('COM_BOXSEARCH_FORM_LABEL'); ?></label>
+            <input type="text" name="query" size="20" class="input" placeholder="" id="query" />
+               <label for="subfolders">
+                     <?php echo JText::_('COM_BOXSEARCH_FILTER_LABEL'); ?>
+               </label>
+               <?php if ($menuParams->get('enable_search_filter', 0)): ?>
+                 <select class="filter-subfolders" name="subfolders">
+                     <option value="<?php echo $menuParams->get('filter_id'); ?>">
+                       <?php echo $menuParams->get('filter_label'); ?>
+                     </option>
+                     <?php echo BoxsearchHelper::getSubfoldersList($menuParams->get('filter_id')); ?>
+                 </select>
+               <?php else: ?>
+                <input class="filter-subfolders" type="hidden" value="<?php echo $menuParams->get('filter_id'); ?>" name="subfolders" />
+             <?php endif; ?>
+             <div class="boxsearch-loading"></div><input type="submit" id="getResults" value="Get Results" class="btn btn-primary" />
+        </fieldset>
      </form>
      <?php endif; ?>
      <?php if ($menuParams->get('enable_upload')): ?>
@@ -113,5 +110,5 @@
 <?php endif; ?>
 <div class="clearfix"></div>
 <div class="box-results"></div>
-
+<input type="submit" id="getMoreResults" value="Get More Results" class="btn btn-primary" />
 

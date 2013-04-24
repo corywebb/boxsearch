@@ -236,6 +236,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		$box_api = new Rest_Client;
 		// search url with query
 		$url = "https://api.box.com/2.0/folders/".$folder_id;
+
 		// get token
 		$token = $this->getToken();
 
@@ -245,6 +246,7 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 		$folders = json_decode($box_api->get($url, $header));
 
 		$subfolders = array();
+
 
 		foreach($folders->item_collection->entries as $item)
 		{
@@ -256,7 +258,8 @@ class BoxsearchModelBoxsearch extends JModelLegacy
 			}
 
 		}
-		
+
+
 		// if there's subfolders return them. If we didn't get any return false
 		if (count($subfolders))
 		{
